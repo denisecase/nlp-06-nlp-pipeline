@@ -1,4 +1,4 @@
-# Project Instructions (Module 5: Web Documents and HTML Data)
+# Project Instructions (Module 6: NLP Pipeline)
 
 ## WEDNESDAY: Complete Workflow Phase 1
 
@@ -24,9 +24,10 @@ Choose any one of these (or a different modification as you like):
 - Change the target URL to a different arXiv paper
   (find a paper you find interesting at https://arxiv.org)
 - Add a new derived column in the Transform stage
-  (e.g., sentence count in the abstract, or first author only)
-- Add extraction of a new field from the page
-  (e.g., the PDF link, or the arXiv category code)
+  (e.g., sentence count in the abstract, or average word length)
+- Adjust the number of top tokens shown in the frequency bar chart
+- Add a new visualization in the Analyze stage
+  (e.g., a histogram of word lengths)
 - Adjust logging messages to provide more detail about the pipeline stages
 
 Confirm the script still runs successfully after your change.
@@ -35,7 +36,7 @@ Confirm the script still runs successfully after your change.
 
 ### Phase 5 Suggestion 1. New arXiv Paper (Directed)
 
-Apply the same EVTL pipeline to a different arXiv abstract page.
+Apply the same EVTAL pipeline to a different arXiv abstract page.
 
 Steps:
 
@@ -43,14 +44,15 @@ Steps:
 - Copy the abstract page URL (e.g., `https://arxiv.org/abs/XXXX.XXXXX`)
 - Update `PAGE_URL` in your copied `config` file with the new URL
 - Run the pipeline
-- Inspect the extracted fields in the log output
+- Inspect the extracted fields, cleaned text, and visualizations
 - Confirm the pipeline runs successfully
 
 Then:
 
 - Identify the title, authors, and primary subject of your chosen paper
-- Describe one field that required cleaning or special handling
-- Explain how the abstract word count compares to the case example
+- Describe how the cleaned abstract differs from the raw abstract
+- Compare the type-token ratio and token count to the case example
+- Describe what the word cloud and bar chart reveal about the paper's topic
 
 ### Phase 5 Suggestion 2. New Web Page (Original Selection)
 
@@ -59,8 +61,8 @@ Apply this pipeline to a different web page of your choice.
 Good options include:
 
 - Another arXiv listing page (e.g., `https://arxiv.org/list/cs.AI/recent`)
-  to extract multiple papers at once
-- A Wikipedia article to extract the introduction and metadata
+  to extract and analyze multiple abstracts at once
+- A Wikipedia article to extract and analyze the introduction
 - A Project Gutenberg page to extract text from a literary work
   (e.g., https://www.gutenberg.org/files/1342/1342-h/1342-h.htm Pride and Prejudice)
 
@@ -71,36 +73,36 @@ Steps:
 - Identify the tags and class names that wrap the content you want
 - Update your copied `config` file with the new URL
 - Update your copied `stage02_validate` file to check for the new structure
-- Update your copied `stage03_transform` file to extract the new fields
+- Update your copied `stage03_transform` file to extract and clean the new fields
 - Run the pipeline and confirm success
 
 Then:
 
 - Describe the HTML structure of your chosen page
 - Identify the tags and attributes you used to extract each field
-- Explain one challenge you encountered and how you resolved it
+- Explain one challenge you encountered in cleaning the text and how you resolved it
+- Describe what the frequency analysis reveals about the content
 
 ## Key Skill Focus
 
 As you work, focus on:
 
-- how to fetch HTML from a web page
-- how to inspect unknown HTML structures using View Page Source
-- how to identify tags, classes, and attributes that wrap desired content
-- how to extract clean text using BeautifulSoup
-- how to handle missing elements gracefully with fallback values
-- how data moves through the EVTL pipeline
+- how Transform is an iterative loop: inspect, clean, inspect, engineer, repeat
+- how cleaning decisions involve tradeoffs (what signal might be lost?)
+- how to compute and interpret token frequency, vocabulary richness, and type-token ratio
+- how visualizations (bar charts, word clouds) surface patterns that numbers alone do not
+- how data moves through the EVTAL pipeline
 
-Your goal is to reuse the same pipeline pattern on new web data sources.
+Your goal is to produce a clean, analysis-ready corpus and interpret what the analysis reveals.
 
 ## Optional Enhancements
 
 If time allows, consider:
 
-- extracting additional fields (PDF link, DOI, version history)
-- computing additional derived fields (sentence count, average word length)
-- scraping a listing page to extract multiple records into a multi-row DataFrame
-- comparing two papers side by side in a single DataFrame
+- extracting and analyzing multiple abstracts into a multi-row DataFrame
+- comparing type-token ratios across two different papers
+- experimenting with different stopword lists or cleaning strategies
+- adding POS-filtered tokens (nouns only, verbs only) to the analysis
 
 ## Professional Communication
 
@@ -115,6 +117,7 @@ Verify key files:
 
 Ensure your project clearly demonstrates:
 
-- correct EVTL pipeline execution
-- understanding of HTML structure and BeautifulSoup
-- ability to adapt the pipeline to new web data sources
+- correct EVTAL pipeline execution
+- understanding of text cleaning and its tradeoffs
+- ability to compute and interpret NLP features
+- meaningful visualizations with written interpretation
