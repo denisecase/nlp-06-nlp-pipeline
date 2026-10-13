@@ -1,163 +1,154 @@
 # nlp-06-nlp-pipeline
 
-<!--additional badges are common. In your custom copy of the project, change `denisecase` to your GitHub account -->
-<!--To run link checks: open your project on GitHub, click the Actions tab, select "Check Links", click "Run workflow" -->
+[![Python 3.14](https://img.shields.io/badge/python-3.14%2B-blue?logo=python)](pyproject.toml)
+[![CI](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/ci-python-zensical.yml/badge.svg)](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/ci-python-zensical.yml)
+[![Documentation](https://img.shields.io/badge/docs-site-blue?logo=github)](https://denisecase.github.io/nlp-06-nlp-pipeline/)
 
-[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://denisecase.github.io/nlp-06-nlp-pipeline/)
-[![Python 3.14+](https://img.shields.io/badge/python-3.14%2B-blue?logo=python)](#)
-[![MIT](https://img.shields.io/badge/license-see%20LICENSE-yellow.svg)](./LICENSE)
-[![CI Status](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/ci-python-zensical.yml/badge.svg?branch=main)](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/ci-python-zensical.yml)
-[![Check Links](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/links.yml/badge.svg?branch=main)](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/links.yml)
+[![uv managed](https://img.shields.io/badge/uv-managed-DE5FE9)](https://docs.astral.sh/uv/)
+[![ty type checked](https://img.shields.io/badge/ty-type_checked-2F80ED)](https://docs.astral.sh/ty/)
+[![Zensical docs](https://img.shields.io/badge/Zensical-docs-purple)](https://zensical.org/)
+[![MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
-> Structured EVTL pipeline for reliable extraction, cleaning, and NLP analysis of HTML web page data.
-> Adds spaCy-based text cleaning and derived NLP features to the Module 5 pipeline.
+> Build a reproducible NLP pipeline for acquiring, processing, and analyzing web text.
 
-Web Mining and Applied NLP require reliable acquisition and
-processing of structured and semi-structured text data.
-This project implements a reproducible pipeline for
-working with HTML data from web pages.
+## Project Overview
 
-The pipeline follows an **EVTAL architecture**:
+Author: Denise Case
 
-- **Extract** - fetch HTML from a web page and preserve the raw artifact
-- **Validate** - confirm structure and content before use
-- **Transform** - an iterative loop: extract fields, clean and normalize text;
-  repeat until the data is ready for analysis
-- **Analyze** - engineer derived NLP features, compute frequency distributions,
-  and visualize patterns to surface meaning in the text
-- **Load** - write results to a persistent, analyzable format
+Date: 2026 October
 
-The emphasis is on correctness, inspectability, and repeatability:
-every stage has explicit inputs, outputs, and logging,
-and intermediate artifacts are preserved for verification.
+Sixth project in the Web Mining and Applied NLP course.
 
-## This Project
+This project introduces a complete natural language
+processing pipeline for working with web documents.
 
-This project demonstrates how to work with
-HTML data retrieved from web pages using a structured EVTL pipeline.
+The goal is to retrieve HTML,
+validate document structure,
+extract and clean text,
+engineer NLP features,
+visualize patterns,
+and persist the results.
 
-The workflow:
+The project extends the EVTL approach
+from earlier modules by adding an explicit
+Analyze stage.
 
-- Acquire HTML from an external web page
-- Inspect and validate its structure
-- Transform it into a tabular representation
-- Persist results for downstream analysis
+The resulting architecture is
+Extract, Validate, Transform, Analyze, Load (EVTAL).
 
-Each stage is implemented as a modular component with explicit inputs and outputs.
+The project is configured in
+[pyproject.toml](pyproject.toml).
 
-NOTE: You do not need to understand every concept before beginning.
-Instead, run the pipeline and inspect the outputs;
-understanding grows by applying the process.
+## Data
 
-## Dependencies
+The example retrieves an academic paper's abstract page
+from [arXiv](https://arxiv.org/abs/2602.20021).
 
-See the pyproject.toml [dependencies] for a list of packages used:
+The source document contains:
 
-```text
-dependencies = [
-    "datafun-toolkit",
-    "requests",
-    "beautifulsoup4",
-    "lxml",
-    "pandas",
-    "matplotlib",
-    "wordcloud",
-    "spacy",
-    "en-core-web-sm",
-]
-```
+- Paper title.
+- Authors.
+- Abstract text.
+- Subject categories.
+- Submission information.
+- arXiv identifier.
+
+The pipeline preserves the original HTML,
+extracts document metadata,
+and produces a structured dataset
+with derived NLP features.
+
+## Approach
+
+The project uses a modular Python pipeline
+to acquire, validate, transform, analyze,
+and save web document data.
+
+The pipeline has five stages:
+
+- **Extract** - retrieve HTML from a web page.
+- **Validate** - verify required HTML elements.
+- **Transform** - extract metadata, clean text, and calculate NLP features.
+- **Analyze** - examine token frequencies and create visualizations.
+- **Load** - save the processed dataset to a CSV file.
+
+The example uses Requests for HTTP acquisition,
+BeautifulSoup for HTML parsing,
+spaCy for linguistic text processing,
+Pandas for tabular data,
+and Matplotlib and WordCloud for visualization.
+
+The Transform stage demonstrates:
+
+- Tokenization and text normalization.
+- Punctuation and stopword removal.
+- Abstract word counts.
+- Cleaned token counts.
+- Unique token counts.
+- Type-token ratios.
+- Author counts.
+
+Explore these important project components:
+
+- [pyproject.toml](pyproject.toml) - project identity, dependencies, and tool configuration.
+- [src/nlp/pipeline_web_html.py](src/nlp/pipeline_web_html.py) - main EVTAL pipeline orchestrator.
+- [src/nlp/config.py](src/nlp/config.py) - example web page and path configuration.
+- [src/nlp/stage01_extract.py](src/nlp/stage01_extract.py) - retrieve HTML.
+- [src/nlp/stage02_validate.py](src/nlp/stage02_validate.py) - validate HTML structure.
+- [src/nlp/stage03_transform.py](src/nlp/stage03_transform.py) - clean text and engineer NLP features.
+- [src/nlp/stage04_analyze.py](src/nlp/stage04_analyze.py) - analyze token frequencies and generate visualizations.
+- [src/nlp/stage05_load.py](src/nlp/stage05_load.py) - save processed results.
+- [tests/](tests/) - automated tests.
+- [.github/workflows/](.github/workflows/) - automated testing and documentation deployment.
+- [docs/](docs/) - project documentation.
+- [zensical.toml](zensical.toml) - documentation configuration.
+
+The goal is to understand how an NLP pipeline
+transforms raw web content into structured,
+analysis-ready data with interpretable features.
 
 ## spaCy and Language Models
 
-This project adds [spaCy](https://spacy.io/), an industrial-strength NLP library,
-to the pipeline for text cleaning and linguistic analysis.
+The project uses [spaCy](https://spacy.io/)
+for tokenization and linguistic text processing.
 
-spaCy is used in the **Transform** stage to:
+The example uses the `en_core_web_sm`
+English language model.
 
-- tokenize text into individual words (either by splitting on whitespace or using linguistic rules)
-- identify and remove stopwords (common words with little analytical signal)
-- annotate tokens with part-of-speech (POS) tags (noun, verb, adjective, etc.)
-- identify named entities (NER) such as people, organizations, and dates
+The model is declared in
+[pyproject.toml](pyproject.toml)
+and installs with the project dependencies.
 
-### Selecting Tools
+The example uses spaCy to identify tokens
+and remove common stopwords.
 
-spaCy is widely used in production NLP systems.
-It is fast, well-documented, and integrates cleanly with Pandas and other Python tools.
-Alternative libraries include **NLTK** (older, more educational) and
-**Hugging Face Transformers** (more powerful, much larger).
-spaCy is a good starting point for most applied NLP work.
+Text preprocessing remains useful in modern NLP,
+particularly when creating inspectable,
+repeatable analysis pipelines.
 
-### spaCy Language Models
+## Run the Project
 
-spaCy requires a language model to perform linguistic analysis.
-Models vary in size and capability:
+Follow the [Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/)
+to set up your machine and project environment.
 
-| Model             | Size    | Use case                                      |
-| ----------------- | ------- | --------------------------------------------- |
-| `en_core_web_sm`  | ~12 MB  | Fast, sufficient for most text cleaning tasks |
-| `en_core_web_md`  | ~43 MB  | Adds word vectors for similarity comparisons  |
-| `en_core_web_lg`  | ~741 MB | Larger word vectors, higher accuracy          |
-| `en_core_web_trf` | ~438 MB | Transformer-based, highest accuracy, slowest  |
+From a VS Code terminal in the project root:
 
-This project uses `en_core_web_sm`.
-It is small, fast, and sufficient for tokenization,
-stopword removal, POS tagging, and basic NER.
+```shell
+uv run python -m nlp.pipeline_web_html
+```
 
-IMPORTANT: The model is declared at the end of `pyproject.toml` under
-**[tool.uv.sources]** and installs automatically via `uv sync`.
-A total `.venv` size of 350–450 MB is normal for NLP projects.
+## Results
 
+The pipeline retrieves an HTML document,
+validates its structure,
+extracts bibliographic information,
+and cleans the abstract text.
 
-### Selecting Models
+It calculates NLP features,
+produces frequency visualizations,
+and writes the results to a CSV file.
 
-Upgrade to `en_core_web_md` or larger when you need:
-
-- word vector similarity (comparing how semantically similar two words are)
-- higher accuracy NER on domain-specific text
-- embeddings for downstream machine learning tasks
-
-### Role in Modern NLP
-
-Modern LLMs handle many of these tasks internally (and differently)
-but fast, auditable preprocessing pipelines using tools like spaCy
-remain common in production when cost, speed, and
-explainability matter.
-For more see, the associated
-[documentation](https://denisecase.github.io/nlp-06-nlp-pipeline/)
-for this project.
-
-## Key Files
-
-These files define the EVTL pipeline and the components you will update for your project.
-
-- **src/nlp/pipeline_web_html.py** - Main pipeline orchestrator (no changes required)
-- **src/nlp/config_case.py** - Configuration for page URL and paths (<mark>**copy and edit**</mark> for your project)
-- **src/nlp/stage01_extract.py** - Extract stage: fetches HTML from a web page (no changes required)
-- **src/nlp/stage02_validate_case.py** - Validate stage: inspects and verifies HTML structure (<mark>**copy and edit**</mark>)
-- **src/nlp/stage03_transform_case.py** - Transform stage: extracts, cleans, and engineers NLP features (<mark>**copy and edit**</mark>)
-- **src/nlp/stage04_load.py** - Load stage: writes output to persistent storage (no changes required)
-- **pyproject.toml** - Project metadata and dependencies (<mark>**update**</mark> authorship, links, and dependencies)
-- **zensical.toml** - Documentation configuration (<mark>**update**</mark> authorship and links)
-
-## First: Follow These Instructions
-
-Follow the [step-by-step workflow guide](https://denisecase.github.io/pro-analytics-02/workflow-b-apply-example-project/) to complete:
-
-1. Phase 1. **Start & Run**
-2. Phase 2. **Change Authorship**
-3. Phase 3. **Read & Understand**
-
-## Challenges
-
-Challenges are expected.
-Sometimes instructions may not quite match your operating system.
-When issues occur, share screenshots, error messages, and details about what you tried.
-Working through issues is an important part of implementing professional projects.
-
-## Success
-
-After completing Phase 1. **Start & Run**, you'll have your own GitHub project,
-running on your machine, and running the example will print out:
+Successful execution produces:
 
 ```shell
 ========================
@@ -165,271 +156,139 @@ Pipeline executed successfully!
 ========================
 ```
 
-The following artifacts will be created:
+The following files are created:
 
-- project.log - confirming successful run
-- data/raw/case_raw.html - dump of the fetched HTML
-- data/processed/case_processed.csv - final loaded result
+- `project.log` - pipeline execution log.
+- `data/raw/case_raw.html` - original HTML document.
+- `data/processed/case_processed.csv` - processed NLP dataset.
+- `data/processed/case_top_tokens.png` - token frequency bar chart.
+- `data/processed/case_wordcloud.png` - word cloud visualization.
 
-## Command Reference
+These artifacts provide evidence of successful
+data acquisition, validation, transformation,
+analysis, and persistence.
 
-The commands below are used in the workflow guide above.
-They are provided here for convenience.
+### Example Visualizations
 
-Follow the guide for the **full instructions**.
+![Top Tokens](docs/images/case_top_tokens.png)
 
-<details>
-<summary>Show command reference</summary>
+![Word Cloud](docs/images/case_wordcloud.png)
 
-### In a machine terminal (open in your `Repos` folder)
+## Verification
 
-After you get a copy of this repo in your own GitHub account,
-open a machine terminal in your `Repos` folder:
+Run the automated tests:
 
 ```shell
-# Replace username with YOUR GitHub username.
-git clone https://github.com/username/nlp-06-nlp-pipeline
-cd nlp-06-nlp-pipeline
-code .
+uv run pytest
 ```
 
-### In a VS Code terminal
+## Project Documentation
+
+The [hosted documentation site](https://denisecase.github.io/nlp-06-nlp-pipeline/)
+is published using Zensical and GitHub Pages.
+
+The documentation site is used to present the project report,
+covering such sections as data, methods, results, visualizations,
+interpretation, and conclusions.
+
+For additional context about traditional NLP
+and modern language-model approaches,
+see [NLP Evolution](docs/nlp-evolution.md).
+
+## CI/CD and GitHub Actions
+
+This project includes continuous integration and continuous deployment (CI/CD)
+to check project files and publish the docs.
+
+GitHub Actions include:
+
+- [CI: Python and Documentation Checks](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/ci-python-zensical.yml)
+- [CD: Documentation Deployment](https://github.com/denisecase/nlp-06-nlp-pipeline/actions/workflows/deploy-zensical.yml)
+
+## Developer Reference
+
+Follow the
+[Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/)
+for **detailed instructions and troubleshooting**.
+
+### Initialize and Update the Python Environment
+
+With the project open in VS Code, open a VS Code terminal.
+Paste each command and hit Enter or Return after to run it.
 
 ```shell
+uvx pup-clean --delete
 uv self update
 uv python pin 3.14
-uv sync --extra dev --extra docs --upgrade
+uv python install
+uv lock --upgrade
+uv sync
+uv audit
+```
 
-uvx pre-commit install
+### Set Up and Run Git Hooks
+
+Set up and run the git hooks to perform
+basic checks automatically before
+any changes get pushed to GitHub.
+
+In the VS Code terminal,
+paste each command and hit Enter or Return after to run it.
+
+```shell
+uv run prek install --force
+uv run prek update --freeze --cooldown-days 7
+
 git add -A
-uvx pre-commit run --all-files
+uv run prek run --all-files
 # repeat if changes were made
-git add -A
-uvx pre-commit run --all-files
+uv run prek run --all-files
+```
 
-# NOTE: spaCy and en_core_web_sm English model (~200+ MB)
-# has been added to pyproject.toml and will
-# install automatically via the `uv sync` command above.
-# Total .venv size of 350-450 MB is normal for NLP projects.
+### Run Common Chores
 
-# Close any figures after viewing so execution continues
-# RUN the pipeline
-uv run python -m nlp.pipeline_web_html
+Run linters, formatters, type checks, tests, and
+build the documentation.
 
-uv run ruff format .
+```shell
 uv run ruff check . --fix
-uv run zensical build
+uv run ruff format .
 
+uv run ty check
+uv run python -m pytest
+uv run python -m zensical build
+```
+
+### Git add-commit-push to GitHub
+
+After making useful changes, save your work to GitHub.
+
+```shell
 git add -A
-git commit -m "update"
+git commit -m "describe your changes in quotes"
 git push -u origin main
 ```
 
-</details>
-
-## Notes
+## Developer Notes
 
 - Use the **UP ARROW** and **DOWN ARROW** in the terminal to scroll through past commands.
 - Use `CTRL+f` to find (and replace) text within a file.
 
-## Example Artifact (Output)
+## Developer Tools
 
-```text
-START PIPELINE
-ROOT_PATH = .
-DATA_PATH = data
-RAW_PATH = data\raw
-PROCESSED_PATH = data\processed
-========================
-STAGE 01: EXTRACT starting...
-========================
-EXTRACT: Fetching HTML from https://arxiv.org/abs/2602.20021
-SOURCE URL = https://arxiv.org/abs/2602.20021
-SINK PATH = data\raw\case_raw.html
-========================
-STAGE 02: VALIDATE starting...
-========================
-HTML STRUCTURE INSPECTION:
-Top-level type: BeautifulSoup
-Top-level elements: ['html']
-VALIDATE: Title found: True
-VALIDATE: Authors found: True
-VALIDATE: Abstract found: True
-VALIDATE: Subjects found: True
-VALIDATE: Dateline found: True
-VALIDATE: HTML structure is valid.
-Sink: validated BeautifulSoup object
-========================
-STAGE 03: TRANSFORM starting...
-========================
-Extracting metadata from HTML
-We must manually inspect the HTML structure to identify the fields we want to extract.
-For this arXiv page, we can extract:
-- Title from <h1 class='title'>
-- Authors from <div class='authors'>
-- Abstract from <blockquote class='abstract'>
-- Primary subject from <div class='subheader'>
-- Submission date from <div class='dateline'>
-- ArXiv ID from canonical link
-Replace any missing content with `unknown` to ensure all are strings.
-========================
-PHASE 3.1: Extract raw fields from HTML
-========================
-Inspect: does the raw data look right?
-Look at the logged output. Does anything look surprising?
-That is the first signal that cleaning is needed.
-========================
-------------------------
-Project specific: Extract title, authors, abstract
-------------------------
-Extracted title: Agents of Chaos
-Extracted authors: Natalie Shapira, Chris Wendler, Avery Yen, Gabriele Sarti, Koyena Pal, Olivia Floody, Adam Belfki, Alex Loftus, Aditya Ratan Jannali, Nikhil Prakash, Jasmine Cui, Giordano Rogers, Jannik Brinkmann, Can Rager, Amir Zur, Michael Ripa, Aruna Sankaranarayanan, David Atkinson, Rohit Gandikota, Jaden Fiotto-Kaufman, EunJeong Hwang, Hadas Orgad, P Sam Sahil, Negev Taglicht, Tomer Shabtay, Atai Ambus, Nitay Alon, Shiri Oron, Ayelet Gordon-Tapiero, Yotam Kaplan, Vered Shwartz, Tamar Rott Shaham, Christoph Riedl, Reuth Mirsky, Maarten Sap, David Manheim, Tomer Ullman, David Bau
-Extracted abstract: We report an exploratory red-teaming study of autonomous language-model-powered agents deployed in a...
-------------------------
-Project specific: Extract subjects from subheader
-------------------------
-Extracted subjects: Computer Science > Artificial Intelligence
-------------------------
-Project specific: Extract submission date from dateline
-------------------------
-Extracted submission date: [Submitted on 23 Feb 2026]
-------------------------
-Project specific: Extract arxiv_id from canonical link
-------------------------
-Extracted arxiv_id: 2602.20021
-========================
-PHASE 3.2: Clean and normalize text fields
-========================
-Inspect: compare abstract_raw to abstract_clean in the log.
-Did we remove anything we should have kept?
-Is there still noise that cleaning missed?
-========================
-  abstract (raw):   We report an exploratory red-teaming study of autonomous language-model-powered agents deployed in a live laboratory env...
-  abstract (clean): report exploratory redteaming study autonomous languagemodelpowered agents deployed live laboratory environment persiste...
-  characters removed: 284 (19.7%)
-========================
-PHASE 3.3: Engineer derived features
-========================
-Inspect: do these derived fields look meaningful?
-Would any additional features help the analysis?
-========================
-  abstract_word_count: 177
-  author_count:        38
-  token_count:         121
-  unique_token_count:  111
-  type_token_ratio:    0.9174
-  top 10 tokens:       ['report', 'exploratory', 'redteaming', 'study', 'autonomous', 'languagemodelpowered', 'agents', 'deployed', 'live', 'laboratory']
-========================
-PHASE 3.4: Build record and create DataFrame
-========================
-Created DataFrame with 1 row and 13 columns
-Columns: ['arxiv_id', 'title', 'authors', 'subjects', 'submitted', 'abstract_raw', 'abstract_clean', 'tokens', 'abstract_word_count', 'token_count', 'unique_token_count', 'type_token_ratio', 'author_count']
-DataFrame Details
-  Title: Agents of Chaos
-  Author count: 38
-  Abstract word count: 177
-  Token count (clean): 121
-  Type-token ratio: 0.9174
-  DF preview:
-     arxiv_id            title  token_count  type_token_ratio  author_count
-0  2602.20021  Agents of Chaos          121            0.9174            38
-Sink: Pandas DataFrame created
-Transformation complete.
-========================
-STAGE 04: ANALYZE starting...
-========================
-========================
-PHASE 4.1: Extract tokens and summary statistics
-========================
-  Paper: Agents of Chaos
-  Abstract word count (raw):    177
-  Token count (clean):          121
-  Unique token count:           111
-  Type-token ratio:             0.9174
-  Author count:                 38
-========================
-PHASE 4.2: Top 20 token frequency - bar chart
-========================
-  Saved bar chart to data\processed\case_top_tokens.png
-========================
-PHASE 4.3: Word cloud
-========================
-  Saved word cloud to data\processed\case_wordcloud.png
-========================
-PHASE 4.4: Top token summary (inline)
-========================
-  Top 20 tokens by frequency:
-      1. report                         3
-      2. agents                         3
-      3. execution                      2
-      4. researchers                    2
-      5. conditions                     2
-      6. behaviors                      2
-      7. vulnerabilities                2
-      8. system                         2
-      9. exploratory                    1
-     10. redteaming                     1
-     11. study                          1
-     12. autonomous                     1
-     13. languagemodelpowered           1
-     14. deployed                       1
-     15. live                           1
-     16. laboratory                     1
-     17. environment                    1
-     18. persistent                     1
-     19. memory                         1
-     20. email                          1
-Sink: visualizations saved to data/processed/
-Analysis complete.
-========================
-STAGE 04: LOAD starting...
-========================
-SINK PATH = data\processed\case_processed.csv
-========================
-Pipeline executed successfully!
-========================
-```
+This project uses professional Python tools to support development,
+testing, documentation, and code quality.
 
-## References (Optional)
+- [uv](https://docs.astral.sh/uv/) - Python environments and dependencies.
+- [Ruff](https://docs.astral.sh/ruff/) - Python linting and formatting, configured in [.ruff.toml](.ruff.toml).
+- [ty](https://docs.astral.sh/ty/) - Python type checking.
+- [pytest](https://docs.pytest.org/) - automated Python testing, configured in [.pytest.toml](.pytest.toml).
+- [prek](https://prek.j178.dev/) - Git hooks and automated checks, configured in [prek.toml](prek.toml).
+- [Zensical](https://zensical.org/) - project documentation, configured in [zensical.toml](zensical.toml).
 
-- Turing (1950). *Computing Machinery and Intelligence*. https://www.csee.umbc.edu/courses/471/papers/turing.pdf
-- Weizenbaum (1966). *ELIZA—A Computer Program for the Study of Natural Language Communication Between Man and Machine*. https://dl.acm.org/doi/10.1145/365153.365168
-- Mikolov et al. (2013). *Efficient Estimation of Word Representations in Vector Space*. https://arxiv.org/abs/1301.3781
-- Pennington et al. (2014). *GloVe: Global Vectors for Word Representation*. https://nlp.stanford.edu/projects/glove/
-- Vaswani et al. (2017). *Attention Is All You Need*. https://arxiv.org/abs/1706.03762
-- Shapira et al. (2026). *Agents of Chaos*. https://arxiv.org/abs/2602.20021
+## Links
 
-## Enhancements
-
-In production systems, validation is often automated using tools
-such as **Great Expectations** or **Soda**.
-
-Within the EVTL architecture, **VALIDATE** is a key stage
-with a clear source, process, and sink:
-
-- **Source**: HTML fetched from the web page
-- **Process**: parsing with BeautifulSoup, checking structure, confirming expected elements are present
-- **Sink**: BeautifulSoup object passed to the TRANSFORM stage
-
-This stage ensures the data is in a **consistent and reliable form**
-before transformation begins,
-so later steps can run without errors or unexpected results.
-
-In this project, validation is implemented directly,
-so all checks are visible, repeatable, and easy to review as part
-of the pipeline.
-
-## Example Output
-
-<!-- TODO: change image links to point to your outputs -->
-<!-- For example:
-
-![Bar Chart](./data/processed/yourname_top_tokens.png)
-
-![Word Cloud](./data/processed/yourname_wordcloud.png)
-
--->
-
-![Bar Chart](./docs/images/case_top_tokens.png)
-
-![Word Cloud](./docs/images/case_wordcloud.png)
+- [Hosted Documentation](https://denisecase.github.io/nlp-06-nlp-pipeline/)
+- [Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/)
+- [Citation](CITATION.cff)
+- [License](LICENSE)

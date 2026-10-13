@@ -1,5 +1,5 @@
-"""
-stage04_analyze_case.py
+"""stage04_analyze.py.
+
 (EDIT YOUR COPY OF THIS FILE)
 
 Source: analysis-ready Pandas DataFrame (from Transform stage)
@@ -43,10 +43,11 @@ Analytical Questions
   - Would a different cleaning strategy change the results?
 
 ======================================================================
-NOTES
+
+Notes:
 ======================================================================
 
-Following our process, do NOT edit this _case file directly.
+Following our process, do NOT edit this  file directly.
 Keep it as a working example.
 
 In your custom project, copy this file and rename it
@@ -113,7 +114,7 @@ def _plot_top_tokens(
 
     # Use plt.subplots to create a figure and axis object.
     # figsize sets the size of the figure in inches.
-    fig, ax = plt.subplots(figsize=(10, 6))
+    _, ax = plt.subplots(figsize=(10, 6))
 
     # barh creates a horizontal bar chart.
     # The y-values are the tokens (words),
@@ -171,7 +172,7 @@ def _plot_wordcloud(
 
     # Use plt.subplots to create a figure and axis object.
     # figsize sets the size of the figure in inches.
-    fig, ax = plt.subplots(figsize=(12, 6))
+    _, ax = plt.subplots(figsize=(12, 6))
 
     # imshow displays the generated word cloud image on the axis.
     ax.imshow(wc, interpolation="bilinear")

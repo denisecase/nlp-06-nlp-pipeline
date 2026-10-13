@@ -1,239 +1,760 @@
-# Glossary (Module 6: NLP Pipeline)
+# Glossary
 
-See earlier glossaries for additional terms.
+This module focuses on integrated NLP pipelines,
+linguistic features, text analysis,
+and connections to modern language models.
 
-## EVTAL (Extract, Validate, Transform, Analyze, Load)
+## Quick Lookup
 
-An extension of the EVTL pipeline that introduces an explicit **Analyze** stage:
+### NLP Pipeline and Features
 
-- **Extract**: fetch HTML from a web page and save it to a file
-- **Validate**: parse the HTML and confirm expected structure is present
-- **Transform**: an iterative loop: extract fields, clean and normalize text,
-  engineer derived features; repeat until the data is analysis-ready
-- **Analyze**: compute frequency distributions and produce visualizations
-  that surface patterns in the text
-- **Load**: write the data to a destination
+- **EVTAL** - Extract, Validate, Transform, Analyze, Load.
+- **NLP Feature** - a measurable property derived from text.
+- **Feature Engineering** - constructing useful variables from existing data.
+- **Token Count** - the number of tokens in a text.
+- **Unique Token Count** - the number of distinct tokens.
+- **Vocabulary Size** - the number of distinct tokens in a document or corpus.
+- **Type-Token Ratio (TTR)** - the proportion of distinct tokens.
+- **Linguistic Tokenization** - dividing text using language-aware rules.
 
-## Text Cleaning (Process)
+### Linguistic Analysis and spaCy
 
-The process of removing noise from raw text to improve the quality
-of downstream analysis.
-Common cleaning steps include lowercasing, removing punctuation,
-normalizing whitespace, and removing stopwords.
-Each cleaning step involves a tradeoff as _signal_ may be lost alongside _noise_.
+- **Linguistic Annotation** - information assigned to language units.
+- **POS Tagging** - assigning grammatical categories to tokens.
+- **NER** - identifying and classifying named entities.
+- **spaCy** - a Python library for natural language processing.
+- **spaCy Language Model** - trained components for linguistic analysis.
+- **spaCy Doc** - a container for processed text and linguistic annotations.
 
-## Normalization (Process)
+### Python Analysis and Visualization
 
-Converting text to a consistent form.
-In this module, normalization includes lowercasing and whitespace reduction
-so that "The" and "the" are treated as the same token.
+- **Counter** - a Python class for counting occurrences.
+- **Matplotlib** - a Python library for creating visualizations.
+- **WordCloud** - a Python library for generating word clouds.
+- **Bar Chart** - a chart comparing values using bars.
+- **Word Cloud** - a visualization emphasizing frequent words.
 
-## Stopword
+### Neural Networks and Language Models
 
-A common word that carries little semantic signal for analysis purposes,
-such as "the", "a", "is", "of".
-Removing stopwords reduces noise before frequency analysis.
-spaCy provides a built-in stopword list for English.
-Note: some stopwords matter in certain contexts (e.g. "not").
-Removal is a **tradeoff**, not a universal rule.
+- **Neural Network** - a computational model that learns patterns from data.
+- **Embedding** - a numerical vector representation.
+- **Static Embedding** - a fixed learned representation of a word.
+- **Contextual Embedding** - a representation influenced by surrounding context.
+- **Attention Mechanism** - a method for weighting relationships between representations.
+- **Transformer** - a neural network architecture based on attention.
+- **Large Language Model (LLM)** - a large-scale model trained to process and generate language.
 
-## Whitespace
+## NLP Pipeline and Features
 
-Characters used to separate text elements without visible marks.
-Common whitespace characters include **spaces, tabs, and line breaks (newlines)**.
-In text processing, whitespace is often used as a simple delimiter
-to split text into tokens (e.g., words).
+### EVTAL (Extract, Validate, Transform, Analyze, Load)
 
-## Tokenization (Process)
+**EVTAL** extends the EVTL pipeline architecture
+by introducing an explicit Analyze stage.
 
-The process of splitting text into individual units called **tokens**.
+The five stages are:
 
-In this module, we use **whitespace tokenization (simplified)**,
-a rule-based approach where tokens are individual words
-produced by splitting on whitespace (e.g., the spaces between words).
-For example, the sentence "NLP is fun" contains three tokens
-when split on whitespace: ["NLP", "is", "fun"].
+- **Extract** - acquire data from a source.
+- **Validate** - check data against defined requirements.
+- **Transform** - prepare data and create analytical features.
+- **Analyze** - examine features and produce analytical results.
+- **Load** - persist the resulting data or artifacts.
 
-This approach is fast and easy to implement but does not account for
-punctuation, contractions, or language-specific rules.
+Separating analysis from transformation
+makes the analytical workflow easier
+to inspect, test, and interpret.
 
-More sophisticated approaches use **linguistic tokenization**,
-as implemented in libraries like spaCy.
-Linguistic tokenizers apply language-aware rules and
-pre-trained statistical models
-to correctly handle punctuation, contractions
-(e.g., "don't" splits into "do" and "n't"),
-and hyphenated or compound words.
+### NLP Feature
 
-Linguistic tokenization produces tokens that more accurately
-reflect the structure and meaning of natural language.
+An **NLP feature** is a measurable
+or derived property of text
+used for analysis or modeling.
 
-## Token
+Examples include:
 
-A single unit of text produced by tokenization.
-In this module, tokens are individual words produced by splitting on whitespace.
-In LLM processing, tokens are often **subword units**
-(parts of words or punctuation) depending on the tokenizer used.
+- Token counts.
+- Vocabulary size.
+- Word frequencies.
+- Grammatical annotations.
+- Numerical text representations.
 
-## Token Count
+Features provide a way to represent
+properties of language as data.
 
-The number of tokens in a text at a given stage of the pipeline.
-In this module, token count is measured after cleaning and stopword removal.
-A lower token count than the raw word count indicates that
-stopwords and noise were successfully removed.
+### Feature Engineering
 
-## Unique Token Count
+**Feature engineering** is the process
+of constructing useful variables
+from existing data.
 
-The number of distinct tokens in a text.
-Comparing unique token count to total token count reveals
+In NLP, feature engineering may involve:
+
+- Calculating text statistics.
+- Extracting linguistic properties.
+- Counting words or tokens.
+- Creating numerical representations.
+- Combining existing features.
+
+Feature engineering makes selected
+properties of text available
+for analysis or modeling.
+
+### Token Count
+
+**Token count** is the number
+of tokens in a text.
+
+Token counts depend on the tokenizer
+and any preprocessing operations applied.
+
+Counts produced by different tokenizers
+are not necessarily comparable.
+
+For example, the same text may produce
+different token counts when processed
+by a word tokenizer or a subword tokenizer.
+
+### Unique Token Count
+
+**Unique token count** is the number
+of distinct tokens in a text.
+
+Repeated occurrences of the same token
+are counted only once.
+
+Comparing unique token count
+to total token count reveals
 how much vocabulary repetition exists.
 
-## Type-Token Ratio (TTR)
+### Vocabulary Size
 
-A measure of vocabulary richness calculated as:
+**Vocabulary size** is the number
+of distinct tokens in a document or corpus.
 
-```
+It provides one measure
+of lexical diversity.
+
+Vocabulary size depends on tokenization
+and preprocessing decisions.
+
+### Type-Token Ratio (TTR)
+
+**Type-token ratio** is the proportion
+of distinct tokens in a token sequence.
+
+```text
 TTR = unique token count / total token count
 ```
 
-A TTR close to 1.0 means almost every word is unique (high diversity).
-Lower TTR values (closer to 0.0) indicate more repetition (lower vocabulary diversity).
-Short texts tend to have higher TTRs than long texts.
+For a nonempty token sequence,
+TTR is greater than zero and at most one.
 
-## Frequency Distribution
+- Values close to 1.0 indicate a high proportion of unique tokens.
+- Lower values indicate more repetition.
 
-A count of how often each token appears in a text.
-Frequency distributions reveal which words dominate the content
-and whether cleaning was effective.
-In this module, `collections.Counter` is used as the implementation
-mechanism to compute frequency distributions.
+TTR is sensitive to document length
+and preprocessing choices.
 
-## collections.Counter (Python library class)
+Short texts often have higher TTR values
+than longer texts, even when the underlying
+language patterns are similar.
 
-A Python standard library class that counts the occurrences of items
-in a list or other iterable.
-`.most_common(n)` returns the n most frequent items as a list of
-`(item, count)` tuples.
+Comparisons therefore require care.
+
+### Linguistic Tokenization
+
+**Linguistic tokenization** divides text
+into units using language-aware rules.
+
+Simple whitespace tokenization
+separates text at spaces and other whitespace.
+
+For example:
+
+```python
+text = "NLP is fun"
+
+tokens = text.split()
+
+# ["NLP", "is", "fun"]
+```
+
+This approach is simple and fast
+but does not account for punctuation,
+contractions, or language-specific conventions.
+
+Linguistic tokenizers may recognize:
+
+- Words and punctuation.
+- Contractions.
+- Abbreviations.
+- Hyphenated expressions.
+- Language-specific token boundaries.
+
+For example, an English tokenizer
+may split `"don't"` into `"do"` and `"n't"`.
+
+spaCy uses language-specific tokenization rules
+that can be customized.
+
+Linguistic tokenization is distinct
+from subword tokenization,
+which is commonly used by large language models.
+
+Neither approach guarantees
+that individual tokens correspond
+to complete words or semantic units.
+
+## Linguistic Analysis and spaCy
+
+### Linguistic Annotation
+
+**Linguistic annotation** assigns
+descriptive information to language units.
+
+Annotations may identify:
+
+- Grammatical roles.
+- Named entities.
+- Sentence boundaries.
+- Syntactic relationships.
+- Other linguistic properties.
+
+Annotations may be created manually
+or by automated NLP systems.
+
+They provide structured information
+for subsequent analysis.
+
+### Part-of-Speech (POS) Tagging
+
+**Part-of-speech tagging** assigns
+grammatical categories to tokens.
+
+Common categories include:
+
+- Noun.
+- Verb.
+- Adjective.
+- Adverb.
+- Pronoun.
+- Preposition.
+
+POS tagging supports linguistic analysis,
+information extraction,
+and text classification.
+
+In spaCy, a token's predicted
+part-of-speech category is available through:
+
+```python
+token.pos_
+```
+
+The assigned category depends
+on the context and the linguistic model.
+
+### Named Entity Recognition (NER)
+
+**Named entity recognition (NER)** identifies
+and classifies references to entities in text.
+
+Common entity categories include:
+
+- People.
+- Organizations.
+- Locations.
+- Dates.
+- Products.
+- Events.
+
+NER supports information extraction
+and structured analysis of documents.
+
+In spaCy, detected named entities
+are available through:
+
+```python
+doc.ents
+```
+
+NER results depend on the model,
+training data, and context.
+
+A detected entity is a model prediction,
+not independent verification
+of the entity's existence or identity.
+
+### spaCy (Python Library)
+
+**spaCy** is a Python library
+for natural language processing.
+
+It provides tools for:
+
+- Linguistic tokenization.
+- Stopword identification.
+- Part-of-speech tagging.
+- Named entity recognition.
+- Dependency parsing.
+- Linguistic feature extraction.
+
+spaCy supports reusable processing pipelines
+and is widely used for applied NLP.
+
+See [spaCy Documentation](https://spacy.io/).
+
+### spaCy Language Model
+
+A **spaCy language model** is a package
+containing configuration and components
+used to process language.
+
+Depending on the model, components may provide:
+
+- Part-of-speech predictions.
+- Syntactic dependency analysis.
+- Named entity recognition.
+- Other linguistic annotations.
+- Word vectors for similarity analysis.
+
+The `en_core_web_sm` model
+provides a relatively small English pipeline.
+
+Other English model packages include:
+
+- `en_core_web_md` - medium-sized model with static word vectors.
+- `en_core_web_lg` - larger model with static word vectors.
+- `en_core_web_trf` - transformer-based processing components.
+
+Model capabilities and resource requirements vary.
+
+Tokenization itself does not necessarily
+require a trained statistical model.
+
+### spaCy Doc
+
+A **spaCy Doc** is an object
+representing processed text.
+
+It contains tokens and may contain
+linguistic annotations produced
+by pipeline components.
+
+For example:
+
+```python
+doc = nlp("Natural language processing is useful.")
+```
+
+The `Doc` object can provide access to:
+
+- Individual tokens.
+- Part-of-speech tags.
+- Named entities.
+- Sentence boundaries.
+- Syntactic information.
+
+Iterating over a Doc
+produces individual `Token` objects.
+
+```python
+for token in doc:
+    print(token.text, token.pos_)
+```
+
+The available annotations depend
+on the processing components
+included in the pipeline.
+
+## Python Analysis and Visualization
+
+### collections.Counter (Python Library Class)
+
+**Counter** is a Python standard library class
+that counts occurrences of items
+in an iterable or collection.
+
+It is useful for calculating
+token frequency distributions.
 
 Example:
 
 ```python
 from collections import Counter
-Counter(["cat", "dog", "cat"]).most_common(2)
-# returns [("cat", 2), ("dog", 1)]
+
+counts = Counter(["cat", "dog", "cat"])
+
+print(counts.most_common(2))
+
+# [("cat", 2), ("dog", 1)]
 ```
 
-## spaCy (Python library)
+The `.most_common(n)` method returns
+the N most frequent items
+as a list of `(item, count)` tuples.
 
-An industrial-strength Python NLP library used in this project
-for tokenization, stopword removal, part-of-speech (POS) tagging,
-and named entity recognition (NER).
-spaCy is fast, well-documented, and widely used in production NLP systems.
+Counter is convenient for frequency analysis
+without requiring a separate tabular data structure.
 
-## spaCy Language Model (pre-trained data model)
+### Matplotlib (Python Library)
 
-A pre-trained model that spaCy uses to perform linguistic analysis.
-This project uses `en_core_web_sm`, the small English model.
-It provides tokenization, stopword lists, POS tags, and basic NER.
-Larger models (`en_core_web_md`, `en_core_web_lg`) add word vectors
-for similarity comparisons.
+**Matplotlib** is a Python library
+for creating static and interactive visualizations.
 
-## Part-of-Speech (POS) Tagging
+Common visualizations include:
 
-The process of labeling each token with its grammatical role:
-noun, verb, adjective, adverb, etc.
-spaCy assigns POS tags automatically when processing text.
-Access via `token.pos_` on any token in a spaCy Doc object.
+- Bar charts.
+- Line charts.
+- Histograms.
+- Scatter plots.
 
-## Named Entity Recognition (NER)
+Matplotlib can display figures
+or save them as image files.
 
-The process of identifying and classifying named things in text:
-people, organizations, locations, dates, products.
-spaCy performs NER automatically when processing text.
-Access via `doc.ents` on a spaCy Doc object.
+For example:
 
-## spaCy Doc (object)
+```python
+import matplotlib.pyplot as plt
 
-The object returned by `nlp(text)` - a processed text object
-containing tokens, POS tags, named entities, and other annotations.
-Iterating over a Doc yields individual `Token` objects.
+plt.savefig("token_frequencies.png")
+```
 
-## Matplotlib (Python library)
+Saving figures to files is useful
+for automated pipelines
+that run without an interactive display.
 
-A Python library for creating static visualizations.
-Used in this module to produce bar charts of token frequencies.
-`plt.savefig()` saves a figure to a file without displaying it,
-which is required for pipeline execution without a display.
+See [Matplotlib Documentation](https://matplotlib.org/).
 
-## WordCloud (Python library)
+### WordCloud (Python Library)
 
-A Python library that generates word cloud images from text.
-Word size reflects frequency - more frequent words appear larger.
-Useful for a quick gestalt view of text content.
-Less precise than a bar chart but easier to read at a glance.
+**WordCloud** is a Python library
+that generates word cloud visualizations
+from text or word frequencies.
 
-## Bar Chart (Visualization)
+Word size typically reflects frequency.
 
-A chart that uses horizontal or vertical bars to show
-the frequency or magnitude of categorical values.
-In this module, a horizontal bar chart shows the top N tokens
-by frequency, making it easy to compare relative dominance.
+Word clouds provide a quick visual impression
+of frequently occurring terms.
 
-## Word Cloud (Visualization)
+They are less precise than frequency tables
+or bar charts for comparing exact counts.
 
-A visual representation of text where word size reflects frequency.
-Produced by the `wordcloud` library.
-Useful for immediate topic recognition but less precise than a bar chart.
+See [WordCloud Documentation](https://amueller.github.io/word_cloud/).
 
-## Static Embedding
+### Bar Chart (Visualization)
 
-A fixed numeric vector representation of a word learned from
-a large text corpus.
-Words with similar meanings are geometrically close in vector space.
-spaCy's `en_core_web_md` and `en_core_web_lg` models include static embeddings.
-Called "static" because the vector does not change based on context -
-"bank" in "river bank" and "bank account" gets the same vector.
+A **bar chart** uses horizontal or vertical bars
+to represent the values of categories.
 
-## Attention Mechanism
+Bar length or height
+corresponds to the measured value.
 
-The **core innovation** of **transformer-based large language models (LLMs)**.
-For each word in a sentence, attention computes
-**which other words matter most** for understanding it in context.
-Specifically, it computes **weighted relationships between tokens**
-to determine context relevance.
-The same word gets a different representation depending on
-the full sentence it appears in.
-This is how LLMs resolve ambiguity and understand meaning contextually,
-unlike static embeddings or n-gram models.
-See: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
+In text analysis, bar charts can display
+the most frequently occurring tokens.
 
-## Large Language Model (LLM)
+Bar charts support direct comparison
+of token frequencies
+and are useful when numerical precision matters.
 
-A **neural network** trained on large text corpora using **transformer architecture**.
-LLMs generate contextual representations of text using attention mechanisms.
-They do not require explicit preprocessing steps such as
-stopword removal, POS taggers, or static word vectors,
-but they work best when given clean, well-structured input.
-Preprocessing pipelines like this one prepare data for LLM consumption.
+### Word Cloud (Visualization)
 
-## Neural Network (NN)
+A **word cloud** is a visualization
+that displays words using visual properties
+such as size to represent frequency or importance.
 
-A computational model loosely inspired by the structure of the human brain,
-consisting of layers of interconnected nodes (neurons) that learn
-to recognize patterns from data.
+Larger words typically indicate
+greater frequency or assigned weight.
 
-During training, the network adjusts the strength of connections
-(called weights) to minimize the difference between its predictions
-and the correct answers.
+Word clouds help provide
+an overall impression of vocabulary.
 
-Neural networks are the foundation of modern NLP:
+However, word size is less precise
+for quantitative comparison
+than a frequency table or bar chart.
 
-- early NLP models used shallow networks with few layers
-- **deep neural networks** (many layers) enabled word vectors and embeddings
-- **transformer-based LLMs are very large deep neural networks**
-  trained on billions of text examples
+Word clouds should be interpreted
+alongside other analytical results.
 
-You do not need to understand the mathematics to use neural network tools,
-but understanding that they _learn from data_ automatically rather than following
-hand-written rules or specific instructions is essential for
-interpreting their outputs and knowing when their output is likely to be reliable.
+## Neural Networks and Language Models
+
+### Neural Network (NN)
+
+A **neural network** is a computational model
+composed of interconnected processing units
+organized into layers.
+
+Neural networks learn patterns from data
+by adjusting numerical parameters,
+commonly called weights and biases.
+
+During supervised training,
+the model typically adjusts its parameters
+to reduce a defined loss function
+that measures prediction error.
+
+Neural networks are loosely inspired
+by biological neural systems,
+but their computational behavior
+is not equivalent to biological reasoning.
+
+Different neural network architectures
+support different kinds of tasks.
+
+Examples include:
+
+- Feedforward neural networks.
+- Recurrent neural networks.
+- Convolutional neural networks.
+- Transformer networks.
+
+Neural networks are foundational
+to many modern NLP systems.
+
+Earlier neural language models
+used relatively shallow architectures.
+
+Deep neural networks enabled
+more expressive learned representations,
+including contextual language representations.
+
+Transformer-based language models
+are examples of deep neural networks.
+
+Unlike entirely rule-based systems,
+neural networks learn statistical relationships
+from training data.
+
+Their predictions still require evaluation,
+and training alone does not establish
+that their outputs are reliable or correct.
+
+### Embedding
+
+An **embedding** is a numerical vector
+representing an item in a learned space.
+
+In NLP, embeddings may represent:
+
+- Tokens.
+- Words.
+- Sentences.
+- Documents.
+
+Embeddings provide numerical representations
+that can be used in statistical analysis
+and machine learning.
+
+Relationships between vectors
+may capture patterns learned from data.
+
+For example, embeddings of words
+used in similar contexts
+may have similar vector representations.
+
+The meaning of similarity depends
+on the embedding method,
+training data, and comparison metric.
+
+### Static Word Embedding
+
+A **static word embedding** assigns
+a fixed learned vector to a word
+regardless of the context in which it appears.
+
+Static embeddings capture
+distributional relationships
+learned from text corpora.
+
+For example, the word `"bank"`
+receives the same static representation
+in these phrases:
+
+- River bank.
+- Bank account.
+
+A static representation cannot directly
+distinguish the meaning of each occurrence
+using its surrounding sentence.
+
+Examples of static embedding approaches include:
+
+- Word2Vec.
+- GloVe.
+- FastText.
+
+Some spaCy language models
+also include static word vectors.
+
+Static embeddings remain useful
+for many similarity and classification tasks.
+
+### Contextual Embedding
+
+A **contextual embedding** represents
+a token or other language unit
+using information from its surrounding context.
+
+The same word may receive
+different representations
+in different sentences.
+
+For example, a contextual model
+can produce different representations
+for `"bank"` in:
+
+- River bank.
+- Bank account.
+
+Contextual embeddings help models
+represent differences in usage
+and linguistic context.
+
+They are important components
+of modern transformer-based language models.
+
+### Attention Mechanism
+
+An **attention mechanism** computes
+weighted combinations of representations
+using relationships among input elements.
+
+In NLP, attention allows
+token representations to incorporate
+information from other tokens.
+
+The weights are calculated
+from learned transformations
+of the input representations.
+
+For example, a model processing
+a sentence may use information
+from several surrounding tokens
+when constructing a contextual representation.
+
+Attention supports context-dependent
+language representations.
+
+Unlike fixed static embeddings,
+contextual representations can vary
+with the surrounding input.
+
+Attention is a foundational mechanism
+in transformer architectures.
+
+However, attention weights are computational quantities
+and should not automatically be interpreted
+as explanations of model decisions.
+
+See [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
+
+### Transformer
+
+A **transformer** is a neural network architecture
+that uses attention mechanisms
+to process relationships among sequence elements.
+
+Transformers support
+context-dependent representations
+and can model relationships
+between tokens across a sequence.
+
+The original transformer architecture
+introduced in *Attention Is All You Need*
+used an encoder-decoder structure.
+
+Common transformer configurations include:
+
+- Encoder-based models for representing and analyzing text.
+- Decoder-based models for generating text.
+- Encoder-decoder models for sequence transformation.
+
+Transformer architectures are widely used
+in modern natural language processing.
+
+They provide the foundation
+for many contemporary large language models.
+
+### Large Language Model (LLM)
+
+A **large language model (LLM)** is a language model
+with substantial learned capacity,
+typically trained on large collections
+of text or other language-related data.
+
+Many contemporary LLMs
+use transformer architectures.
+
+LLMs learn statistical patterns
+that support tasks such as:
+
+- Text generation.
+- Summarization.
+- Question answering.
+- Information extraction.
+- Text transformation.
+- Classification.
+
+Transformer-based LLMs use learned representations
+and attention mechanisms
+to process contextual relationships.
+
+Their outputs depend on:
+
+- Training data and objectives.
+- Model architecture.
+- Input context.
+- Generation settings.
+- Additional training or adaptation.
+
+LLMs generally do not require
+traditional preprocessing operations
+such as stopword removal or explicit POS tagging.
+
+However, they still use tokenization
+and may benefit from appropriate
+data cleaning, formatting, and validation.
+
+LLMs can produce fluent text
+without guaranteeing factual correctness.
+
+Their outputs require evaluation
+against the intended task and context.
+
+## Relationship to Traditional NLP
+
+Traditional NLP methods and modern language models
+provide different approaches to processing language.
+
+Traditional approaches often use
+explicit preprocessing,
+linguistic annotations,
+and engineered features.
+
+Modern language models learn
+many representations directly
+from training data.
+
+These approaches are not mutually exclusive.
+
+Explicit preprocessing and feature engineering
+remain useful when requirements include:
+
+- Inspectability.
+- Reproducibility.
+- Computational efficiency.
+- Clearly defined measurements.
+- Structured information extraction.
+- Domain-specific validation.
+
+Understanding traditional NLP concepts
+helps explain the foundations
+and limitations of modern language models.
+
+The choice of methods should depend
+on the analytical task,
+available resources,
+and requirements for verification.
+
+---
+
+[◄ Back to 🏠 Home](index.md)

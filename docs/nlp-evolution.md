@@ -3,17 +3,22 @@
 ## Introduction
 
 Understanding _how_ NLP tools work (and how they differ) separates
-an analyst who can apply a library from one who can choose the right tool,
+an analyst who can apply a library
+from one who can choose the right tool,
 diagnose failures, and explain results to stakeholders.
 
-This document traces the evolution from count-based and rule-based NLP approaches
+This document traces the evolution from
+count-based and rule-based NLP approaches
 (as implemented in tools like **spaCy**)
 to modern large language models (**LLMs**).
-The progression is a conceptual ladder to understanding why modern AI NLP works the way it does.
+The progression is a conceptual ladder to understanding
+why modern AI NLP works the way it does.
 
-The goal is to **understand how each step improves the ability to represent meaning in text**.
-We do **not** need to master all concepts of the evolution in detail.
-It is provided as optional background for those interested in how modern NLP evolved.
+The goal is to understand how each step
+**improves the ability to represent meaning in text**.
+There is no need to master this evolution,
+it's offered as optional background for those interested
+in how modern NLP evolved.
 
 ## Generation 1: Count-Based and Rule-Based NLP
 
@@ -61,17 +66,21 @@ where **semantically similar words are geometrically close**.
 
 The famous demonstration:
 
-```
+```text
 king - man + woman ≈ queen
 ```
 
-This works because the model learns from large numbers (e.g., billions) of word **co-occurrences**
-and **encodes the relationships between words as directions in vector space**.
+This works because the model learns from large numbers
+(e.g., billions) of word **co-occurrences**
+and **encodes the relationships between words**
+as **directions in vector space**.
 
 spaCy's `en_core_web_md` and `en_core_web_lg` models include static word vectors.
-They are called **static** because each word has one fixed vector regardless of context.
+They are called **static**
+because each word has one fixed vector regardless of context.
 "Bank" in "river bank" and "bank account" still gets the same vector:
-an average of all the contexts the word appears in across the training corpus.
+an average of all the contexts
+the word appears in across the training corpus.
 
 Static embeddings are a major step forward from count-based models
 but still cannot resolve meaning from context.
@@ -83,12 +92,16 @@ The transformer architecture, introduced in the 2017 paper
 solved the context problem.
 
 The key mechanism is **attention**.
-For every word in a sentence, the model computes weighted relationships between tokens to determine:
-_which other words in this sentence matter most for understanding this word right now?_
+For every word in a sentence,
+the model computes weighted relationships between tokens to determine:
+_which other words in this sentence matter most_
+for understanding this word right now?
 
-In "I went to the river bank to fish," the word "bank" assigns higher attention weight to
+In "I went to the river bank to fish,"
+the word "bank" assigns higher attention weight to
 "river" and "fish."
-In "I went to the bank to deposit a check," the same word "bank" assigns higher attention weight to
+In "I went to the bank to deposit a check,"
+the same word "bank" assigns higher attention weight to
 "deposit" and "check."
 
 The result is a **dynamic contextual representation**:
@@ -122,7 +135,8 @@ Attention resolves the limitation that embeddings could not.
 ## spaCy Preprocessing Still Matters
 
 LLMs understand language contextually and
-**do not require explicit preprocessing steps such as stopword removal or POS tagging** to process text.
+**do not require explicit preprocessing steps**
+such as stopword removal or POS tagging to process text.
 
 So why do production pipelines still use tools like spaCy?
 
@@ -169,3 +183,7 @@ It is fast, auditable, and sufficient for most preprocessing tasks.
 Modern LLMs operate at Generation 3,
 but work best when their input data has been
 carefully prepared using pipelines built on foundational NLP principles.
+
+---
+
+[◄ Back to 🏠 Home](index.md)

@@ -1,12 +1,11 @@
-"""
-src/nlp/stage04_load.py
+"""src/nlp/stage05_load.py.
+
 (NO EDITS REQUIRED IN THIS FILE IF USING THE SAME PACKAGES)
 
 Source: DataFrame (in this case, a Pandas DataFrame, change if using polars)
 Sink: CSV file
 
-Notes
-
+Notes:
 - This file should not require modification unless you change the DataFrame library.
 """
 
@@ -41,7 +40,7 @@ def run_load(
         None (just writes to the sink)
     """
     LOG.info("========================")
-    LOG.info("STAGE 04: LOAD starting...")
+    LOG.info("STAGE 05: LOAD starting...")
     LOG.info("========================")
 
     df.to_csv(processed_csv_path, index=False)

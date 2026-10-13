@@ -1,123 +1,153 @@
-# Project Instructions (Module 6: NLP Pipeline)
+# Project Instructions
 
-## WEDNESDAY: Complete Workflow Phase 1
+## Goal
 
-Follow the instructions in
-[⭐ **Workflow: Apply Example**](https://denisecase.github.io/pro-analytics-02/workflow-b-apply-example-project/)
-to complete:
+Apply **natural language processing**
+to extract, clean, analyze, and interpret
+text from a web document.
 
-1. Phase 1. **Start & Run** - copy the project and confirm it runs
+Combine web acquisition, text preprocessing,
+feature engineering, and visualization
+in an integrated NLP pipeline.
 
-## FRIDAY/SUNDAY: Complete Workflow Phases 2-4
+Use an Extract, Validate, Transform, Analyze, Load (EVTAL) pipeline.
 
-Again, follow the instructions above to complete:
+## A. Set Up Machine
 
-1. Phase 2. **Change Authorship** - update the project to your name and GitHub account
-2. Phase 3. **Read & Understand** - review the project structure and code
-3. Phase 4. **Make a Technical Modification** - make a change and verify it still runs.
+Complete [Workflow A: Set Up Machine](https://denisecase.github.io/pro-analytics-02/workflow-a-set-up-machine/)
+if your machine is not ready.
 
-## Phase 4 Suggestions
+## B. Explore Example Project
 
-Make a small technical change that does not break the pipeline.
-Choose any one of these (or a different modification as you like):
+Follow [Workflow B: Explore Example Project](https://denisecase.github.io/pro-analytics-02/workflow-b-explore-example-project/).
 
-- Change the target URL to a different arXiv paper
-  (find a paper you find interesting at https://arxiv.org)
-- Add a new derived column in the Transform stage
-  (e.g., sentence count in the abstract, or average word length)
-- Adjust the number of top tokens shown in the frequency bar chart
-- Add a new visualization in the Analyze stage
-  (e.g., a histogram of word lengths)
-- Adjust logging messages to provide more detail about the pipeline stages
+Explore how the example:
 
-Confirm the script still runs successfully after your change.
+- Retrieves and validates an HTML document.
+- Extracts document text and metadata.
+- Uses spaCy for linguistic text processing.
+- Applies cleaning and stopword removal.
+- Calculates token counts and vocabulary measures.
+- Computes token frequency distributions.
+- Creates a frequency bar chart and word cloud.
+- Saves the processed data and visualizations.
 
-## Phase 5 Suggestions
+Consider how preprocessing choices
+affect the resulting token frequencies
+and type-token ratio.
 
-### Phase 5 Suggestion 1. New arXiv Paper (Directed)
+## C. Start New Project
 
-Apply the same EVTAL pipeline to a different arXiv abstract page.
+Follow [Workflow C: Start New Project](https://denisecase.github.io/pro-analytics-02/workflow-c-start-new-project/).
 
-Steps:
+IMPORTANT: New repository name:
+**nlp-06-nlp-pipeline-custom**.
 
-- Find an arXiv paper that interests you at https://arxiv.org
-- Copy the abstract page URL (e.g., `https://arxiv.org/abs/XXXX.XXXXX`)
-- Update `PAGE_URL` in your copied `config` file with the new URL
-- Run the pipeline
-- Inspect the extracted fields, cleaned text, and visualizations
-- Confirm the pipeline runs successfully
+VERIFY: You have completed git add-commit-push to GitHub at least twice.
 
-Then:
+## D. Apply Skills
 
-- Identify the title, authors, and primary subject of your chosen paper
-- Describe how the cleaned abstract differs from the raw abstract
-- Compare the type-token ratio and token count to the case example
-- Describe what the word cloud and bar chart reveal about the paper's topic
+Follow [Workflow D: Apply Skills](https://denisecase.github.io/pro-analytics-02/workflow-d-apply-skills/).
 
-### Phase 5 Suggestion 2. New Web Page (Original Selection)
+**Your problem:** Investigate the vocabulary
+and linguistic patterns of an academic paper
+using an integrated NLP pipeline.
 
-Apply this pipeline to a different web page of your choice.
+Use the academic paper selected
+for your Module 05 custom project.
 
-Good options include:
+Build on your previous work with
+HTML extraction and structured data.
 
-- Another arXiv listing page (e.g., `https://arxiv.org/list/cs.AI/recent`)
-  to extract and analyze multiple abstracts at once
-- A Wikipedia article to extract and analyze the introduction
-- A Project Gutenberg page to extract text from a literary work
-  (e.g., https://www.gutenberg.org/files/1342/1342-h/1342-h.htm Pride and Prejudice)
+Keep the original `_case.py` files as working examples.
+Create and modify copies for your custom processing stages.
 
-Steps:
+Update the pipeline imports as needed
+so your custom implementation executes.
 
-- Open the target page in your browser
-- Right-click and select "View Page Source" to inspect the HTML structure
-- Identify the tags and class names that wrap the content you want
-- Update your copied `config` file with the new URL
-- Update your copied `stage02_validate` file to check for the new structure
-- Update your copied `stage03_transform` file to extract and clean the new fields
-- Run the pipeline and confirm success
+### Progression 1. Your Project Works Like the Example
 
-Then:
+Ensure your new custom project runs like the example.
 
-- Describe the HTML structure of your chosen page
-- Identify the tags and attributes you used to extract each field
-- Explain one challenge you encountered in cleaning the text and how you resolved it
-- Describe what the frequency analysis reveals about the content
+Verify that key files have been updated to use **your GitHub account** and
+the **new custom repository name**.
 
-## Key Skill Focus
+### Progression 2. Make a Technical Modification
 
-As you work, focus on:
+Change one feature of the NLP analysis.
 
-- how Transform is an iterative loop: inspect, clean, inspect, engineer, repeat
-- how cleaning decisions involve tradeoffs (what signal might be lost?)
-- how to compute and interpret token frequency, vocabulary richness, and type-token ratio
-- how visualizations (bar charts, word clouds) surface patterns that numbers alone do not
-- how data moves through the EVTAL pipeline
+For example, change the number of top tokens
+displayed in the frequency bar chart.
 
-Your goal is to produce a clean, analysis-ready corpus and interpret what the analysis reveals.
+Run the pipeline again
+and verify that the visualization changes.
 
-## Optional Enhancements
+Explain how the modification
+affects the presentation of the results.
 
-If time allows, consider:
+### Progression 3. Apply to a New Problem
 
-- extracting and analyzing multiple abstracts into a multi-row DataFrame
-- comparing type-token ratios across two different papers
-- experimenting with different stopword lists or cleaning strategies
-- adding POS-filtered tokens (nouns only, verbs only) to the analysis
+Adapt the EVTAL pipeline
+to analyze your selected academic paper.
 
-## Professional Communication
+- Reuse the document extraction techniques from Module 05.
+- Verify the HTML structure and extracted information.
+- Inspect the raw abstract text.
+- Apply appropriate cleaning and tokenization.
+- Calculate total and unique token counts.
+- Calculate and interpret the type-token ratio.
+- Identify the most frequently occurring tokens.
+- Generate a token frequency chart and word cloud.
+- Save the processed dataset and visualizations.
+- Interpret what the results reveal about the document.
 
-Remove instructor-provided content you no longer need in your project.
+Investigate one preprocessing decision.
 
-Make sure the title and narrative reflect your presentation.
-Verify key files:
+For example, compare results
+with and without selected stopwords.
 
-- README.md
-- docs/ (source and hosted on GitHub Pages)
-- src/ (pipeline and stage files)
+Explain:
 
-Ensure your project clearly demonstrates:
+- How the cleaning decision changed the results.
+- Whether useful information may have been removed.
+- What the most frequent tokens suggest about the topic.
+- What the type-token ratio reveals about vocabulary diversity.
+- What limitations affect your interpretation.
 
-- correct EVTAL pipeline execution
-- understanding of text cleaning and its tradeoffs
-- ability to compute and interpret NLP features
-- meaningful visualizations with written interpretation
+The goal is to integrate the skills from earlier modules
+into a complete, interpretable NLP workflow.
+
+## E. Finalize Project
+
+Follow [Workflow E: Finalize Project](https://denisecase.github.io/pro-analytics-02/workflow-e-finalize/).
+
+Use `docs/index.md` to report:
+
+- Selected document and analytical question.
+- Data acquisition and validation.
+- Text preprocessing and cleaning decisions.
+- NLP features and calculations.
+- Token frequencies and vocabulary measures.
+- Frequency chart and word cloud.
+- Interpretation, tradeoffs, and limitations.
+
+Include a clickable link to your repository and artifacts.
+
+## Success
+
+- [ ] README.md project-specific links use **your GitHub account**.
+- [ ] README.md project-specific links use **your custom repository name**.
+- [ ] docs/index.md project-specific links use **your GitHub account**.
+- [ ] docs/index.md project-specific links use **your custom repository name**.
+- [ ] pyproject.toml `name` has been changed to use **your custom repository name**.
+- [ ] The `src/nlp` folder reflects your authorship and custom work.
+- [ ] The custom EVTAL pipeline processes your selected document.
+- [ ] The processed dataset and visualization artifacts are available.
+- [ ] The preprocessing choices and NLP results are interpreted.
+- [ ] All necessary commands are provided and work successfully.
+- [ ] Links to the Professional Python Guide (pro-analytics-02) remain unchanged.
+- [ ] Commit history shows **at least** the git add-commit-push history required in the instructions.
+
+---
+
+[◄ Back to Home](index.md)

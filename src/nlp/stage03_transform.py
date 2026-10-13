@@ -1,6 +1,6 @@
-"""
-stage03_transform_case.py
-(EDIT YOUR COPY OF THIS FILE)
+"""stage03_transform.py.
+
+(EDIT YOUR VERSION OF THIS FILE)
 
 Source: validated BeautifulSoup object
 Sink:   analysis-ready Pandas DataFrame
@@ -97,10 +97,11 @@ Analytical Questions
   - Is the DataFrame genuinely ready for downstream use?
 
 ======================================================================
-NOTES
+
+Notes:
 ======================================================================
 
-Following our process, do NOT edit this _case file directly.
+Following our process, do NOT edit this  file directly.
 Keep it as a working example.
 
 In your custom project, copy this file and rename it
@@ -244,7 +245,7 @@ def run_transform(
     LOG.info("========================")
 
     # Extract fields using the same approach as Module 5.
-    # See nlp-06-nlp-pipeline/src/nlp/stage03_transform_case.py for full explanation.
+    # See nlp-06-nlp-pipeline/src/nlp/stage03_transform.py for full explanation.
     # Code is refactored to use the internal function _get_text() helper.
 
     LOG.info("Inspect: does the raw data look right?")
@@ -253,7 +254,7 @@ def run_transform(
     LOG.info("========================")
 
     # Extract fields using the same approach as Module 5.
-    # See nlp-06-nlp-pipeline/src/nlp/stage03_transform_case.py for full explanation.
+    # See nlp-06-nlp-pipeline/src/nlp/stage03_transform.py for full explanation.
 
     LOG.info("------------------------")
     LOG.info("Project specific: Extract title, authors, abstract")

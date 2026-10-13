@@ -1,6 +1,6 @@
-"""
-src/nlp/pipeline_web_html.py - Module 6 Script
-(NO EDITS REQUIRED IN THIS FILE)
+"""src/nlp/pipeline_web_html.py - Module 6 Script.
+
+(NO EDITS REQUIRED IN THIS FILE.)
 
 Purpose
 
@@ -20,8 +20,7 @@ Analytical Questions
 - How can we analyze text data to surface frequency patterns and visualizations?
 - How can we load the transformed data into a sink (like a CSV file)?
 
-Notes
-
+Notes:
 - This file should not require modification.
 - This is the main pipeline script that orchestrates the entire EVTAL process.
 - EVTAL: Extract, Validate, Transform, Analyze, Load.
@@ -45,7 +44,7 @@ import logging
 
 from datafun_toolkit.logger import get_logger, log_header, log_path
 
-from nlp.config_case import (
+from nlp.config import (
     DATA_PATH,
     HTTP_REQUEST_HEADERS,
     PAGE_URL,
@@ -56,9 +55,9 @@ from nlp.config_case import (
     ROOT_PATH,
 )
 from nlp.stage01_extract import run_extract
-from nlp.stage02_validate_case import run_validate
-from nlp.stage03_transform_case import run_transform
-from nlp.stage04_analyze_case import run_analyze
+from nlp.stage02_validate import run_validate
+from nlp.stage03_transform import run_transform
+from nlp.stage04_analyze import run_analyze
 from nlp.stage05_load import run_load
 
 # ============================================================
@@ -74,6 +73,7 @@ LOG: logging.Logger = get_logger("CI", level="DEBUG")
 
 
 def main() -> None:
+    """Main function for the EVTAL pipeline."""
     log_header(LOG, "Module 6: EVTAL PIPELINE - WEB DOCUMENTS (HTML)")
     LOG.info("START PIPELINE")
 
