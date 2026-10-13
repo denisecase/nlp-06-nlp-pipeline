@@ -7,12 +7,17 @@ an analyst who can apply a library
 from one who can choose the right tool,
 diagnose failures, and explain results to stakeholders.
 
-This document traces the evolution from
-count-based and rule-based NLP approaches
-(as implemented in tools like **spaCy**)
+This document traces a conceptual progression from
+count-based and rule-based NLP approaches,
+through statistical language processing and word embeddings,
 to modern large language models (**LLMs**).
-The progression is a conceptual ladder to understanding
-why modern AI NLP works the way it does.
+
+Tools such as **spaCy** combine several of these approaches,
+including linguistic rules, trained statistical models,
+and optional word vectors or transformer components.
+
+The progression is a conceptual ladder for understanding
+how NLP systems increasingly represent and use linguistic context.
 
 The goal is to understand how each step
 **improves the ability to represent meaning in text**.
@@ -22,43 +27,64 @@ in how modern NLP evolved.
 
 ## Generation 1: Count-Based and Rule-Based NLP
 
-Early NLP systems (1950s–1980s) primarily relied on counting, matching,
-and applying hand-crafted linguistic rules.
-These systems are not considered "machine learning" as they did not learn from data.
-Their behavior was _explicitly programmed_.
+Early NLP systems (1950s-1980s) often relied on counting,
+pattern matching, and hand-crafted linguistic rules.
 
-A **stopword list** is a manually curated list of common words
-(the, a, is, of) that carry little analytical signal.
-Removing them reduces noise before analysis.
+Rule-based systems follow explicitly programmed instructions
+rather than learning their rules from training data.
+Statistical methods also developed during this period
+and became increasingly important in later NLP systems.
+
+A **stopword list** identifies common words
+(the, a, is, of) that may contribute little to
+some frequency-based analyses.
+Removing them can reduce noise,
+but may also remove useful information.
+
+A simple rule-based system can identify words,
+match patterns, or recognize known names.
+More advanced systems use statistical models
+trained on examples of language.
 
 A **POS tagger** assigns grammatical roles to words
-(noun, verb, adjective) using pre-trained statistical patterns learned from labeled text.
-The word "run" is tagged differently in "I run every day" vs "a run of bad luck"
-based on surrounding words in a fixed window.
+(noun, verb, adjective).
+Modern POS taggers commonly use trained statistical models
+that consider the surrounding context.
 
-A **named entity recognizer (NER)** identifies and classifies named things in text:
-people, organizations, locations, dates, products.
-spaCy's NER model learns statistical patterns in labeled text
-(e.g., titles like "Dr." often precede person names).
+A **named entity recognizer (NER)** identifies and
+classifies entities such as people, organizations,
+locations, and dates.
+Modern NER systems also use trained models to predict
+entity labels from linguistic context.
 
-These tools work well and remain fast, cheap, and auditable.
-Their limitation is that meaning is determined by local context,
-i.e., a fixed window of surrounding words, rather than
-by the full sentence or document.
+For example, spaCy's `en_core_web_sm` pipeline
+includes trained statistical components for
+POS tagging, dependency parsing, and NER.
+These components are not simply hand-coded rules.
 
-The word "bank" in "river bank" and "bank account" looks identical
-to a count-based or rule-based system.
-The tool cannot distinguish them without additional rules.
+Count-based and rule-based approaches remain useful
+because they can be efficient, inspectable, and reproducible.
+
+However, simple frequency counts cannot distinguish
+the meaning of "bank" in "river bank" and "bank account."
+Rules can address specific cases, but require those
+distinctions to be explicitly represented.
+
+Statistical and neural approaches learn patterns
+from training data and can use surrounding context
+to make predictions.
 
 ## Generation 2: Word Vectors and Static Embeddings
 
-Word vector models (
-[Word2Vec](https://www.tensorflow.org/text/tutorials/word2vec),
-[GloVe](https://nlp.stanford.edu/projects/glove/)
-) introduced a fundamentally different idea:
-represent
-**each word as a point in a high-dimensional vector space**,
-where **semantically similar words are geometrically close**.
+Word vector models such as
+[Word2Vec](https://www.tensorflow.org/text/tutorials/word2vec)
+and [GloVe](https://nlp.stanford.edu/projects/glove/)
+popularized learned numerical representations of words.
+
+These models represent words as
+**points in a high-dimensional vector space**,
+where words used in similar contexts
+often have related representations.
 
 "King" and "queen" are near each other.
 "Paris" and "France" are near each other in the same way
@@ -69,6 +95,10 @@ The famous demonstration:
 ```text
 king - man + woman ≈ queen
 ```
+
+Note: This analogy illustrates relationships
+that some embedding models learn and is not
+guaranteed for every model or corpus.
 
 This works because the model learns from large numbers
 (e.g., billions) of word **co-occurrences**
@@ -82,38 +112,69 @@ because each word has one fixed vector regardless of context.
 an average of all the contexts
 the word appears in across the training corpus.
 
-Static embeddings are a major step forward from count-based models
-but still cannot resolve meaning from context.
+They are called **static** because a given word
+has the same learned vector regardless of the sentence.
+
+For example, "bank" in "river bank" and "bank account"
+uses the same static word vector.
+
+That vector reflects patterns learned across
+the word's occurrences in the training corpus.
+It is not necessarily a literal average of those contexts.
+
+Static embeddings capture useful statistical relationships,
+but the embedding itself does not change according
+to the word's current context.
+
+Other model components can still use surrounding words
+to interpret that fixed representation.
 
 ## Generation 3: Attention and Contextual Meaning (~2017)
 
+Neural language models developed increasingly powerful ways
+to represent words using surrounding context.
+
+Recurrent neural networks and other contextual models
+could already use information from neighboring words.
+
 The transformer architecture, introduced in the 2017 paper
 [Attention Is All You Need](https://arxiv.org/abs/1706.03762),
-solved the context problem.
+made self-attention central to a highly influential
+neural network architecture.
 
 The key mechanism is **attention**.
-For every word in a sentence,
-the model computes weighted relationships between tokens to determine:
-_which other words in this sentence matter most_
-for understanding this word right now?
 
-In "I went to the river bank to fish,"
-the word "bank" assigns higher attention weight to
-"river" and "fish."
-In "I went to the bank to deposit a check,"
-the same word "bank" assigns higher attention weight to
-"deposit" and "check."
+Attention computes weighted relationships between token
+representations, allowing a model to combine information
+from different parts of the available context.
 
-The result is a **dynamic contextual representation**:
-the same word gets a different numeric representation depending on
-the full sentence it appears in.
-This is how LLMs resolve ambiguity, understand metaphor,
-and answer questions about complex text.
+Consider two sentences:
 
-This is fundamentally different from **positional adjacency (Generation 1)**
-and **static similarity (Generation 2)**.
-The meaning is not stored in a fixed vector.
-It is computed fresh for each occurrence based on everything around it.
+- "I went to the river bank to fish."
+- "I went to the bank to deposit a check."
+
+A contextual model can produce different representations
+of "bank" because the surrounding words differ.
+
+The resulting **contextual representation**
+depends on the word's occurrence and the context
+available to the model.
+
+Unlike a static word embedding,
+this representation can change between sentences.
+
+Transformer architectures differ in how much context
+each token can access.
+For example, many generative LLMs use causal attention,
+which prevents a token from attending to future tokens.
+
+Contextual representations help language models
+handle ambiguity and relationships within text.
+They do not guarantee correct interpretation or reasoning.
+
+Transformers substantially advanced contextual modeling,
+but attention and contextual language processing
+existed before 2017.
 
 ## The Progression Illustrated
 
@@ -121,68 +182,120 @@ A [Toy GPT model](https://toy-gpt.github.io/toy-gpt-chat/)
 ([repo](https://github.com/toy-gpt/toy-gpt-chat))
 demonstrates the conceptual ladder:
 
-| Model                | What it learns              | Limitation                |
-| -------------------- | --------------------------- | ------------------------- |
-| Unigram              | Overall word frequency      | No context at all         |
-| Bigram               | What word follows this word | One-word window           |
-| Context-2, Context-3 | Short positional patterns   | Fixed, small window       |
-| Embeddings           | Static semantic similarity  | No contextual adjustment  |
-| Attention            | Dynamic contextual meaning  | Computationally expensive |
+| Model                 | What it represents                    | Limitation                            |
+| --------------------- | ------------------------------------- | ------------------------------------- |
+| Unigram               | Overall token frequency               | No sequence context                   |
+| Bigram                | Adjacent token relationships          | Very limited context                  |
+| Context-2, Context-3  | Short token sequences                 | Fixed context size                    |
+| Static embeddings     | Learned word relationships            | Fixed word representation             |
+| Transformer attention | Context-dependent token relationships | Computational cost and context limits |
 
-Each step resolves a limitation of the previous one.
-Attention resolves the limitation that embeddings could not.
+Each approach adds capabilities for representing
+patterns and relationships in language.
+
+Attention is a mechanism within a model,
+not a complete language model.
+
+Later approaches do not make earlier techniques obsolete.
+They address different problems and involve different
+tradeoffs in cost, complexity, and interpretability.
 
 ## spaCy Preprocessing Still Matters
 
-LLMs understand language contextually and
-**do not require explicit preprocessing steps**
-such as stopword removal or POS tagging to process text.
+LLMs process language contextually and generally
+do not require traditional preprocessing steps
+such as stopword removal or POS tagging.
+
+Aggressive cleaning may remove useful information,
+including punctuation, negation, formatting,
+and relationships between words.
 
 So why do production pipelines still use tools like spaCy?
 
 ### Cost and speed
 
-Calling an LLM API costs money per input token processed.
-Preprocessing with spaCy to remove boilerplate, normalize text,
-and extract only the relevant fields reduces the number of tokens sent to the LLM,
-reducing cost and latency.
+LLM API costs often depend on the number of input
+and output tokens processed.
+
+Extracting relevant content, removing unrelated
+boilerplate, and selecting appropriate documents
+can reduce the amount of text sent to an LLM.
+
+Traditional NLP tools can support these operations,
+although unnecessary preprocessing adds work
+and may reduce input quality.
 
 ### Auditability
 
-spaCy pipelines are deterministic and inspectable.
-Every cleaning decision is visible in code.
-LLM outputs are probabilistic and harder to audit.
-In regulated industries (healthcare, finance, legal) this matters.
+Rule-based preprocessing steps can be explicitly
+documented and reproduced.
+
+spaCy's trained statistical components also produce
+inspectable outputs, but their predictions may be incorrect.
+
+Keeping model versions, configuration, and processing
+decisions consistent supports reproducibility.
+
+LLM-generated outputs require their own validation,
+particularly when accuracy and traceability matter.
 
 ### Scale
 
-Processing millions of documents with an LLM is slow and expensive.
-A spaCy pipeline can process large volumes of documents quickly
-(often thousands per second, depending on hardware).
+Traditional NLP pipelines can process large collections
+of documents efficiently.
+
+For operations such as tokenization, pattern matching,
+and structured extraction, these approaches may require
+fewer computational resources than large generative models.
+
+The appropriate choice depends on the task,
+required accuracy, and available resources.
 
 ### Structured extraction
 
-Pulling named entities, dates, or POS patterns at scale
-is faster and cheaper with spaCy than with an LLM.
+spaCy provides tools for extracting entities,
+linguistic annotations, and rule-based patterns.
 
-Pipeline processing skills (e.g., inspect, clean, engineer features, validate)
-help prepare data for LLMs; they do not describe how LLMs work internally.
-These preparation skills help maintain and enhance analyst value
-as NLP models become increasingly automated.
+For well-defined extraction tasks, these methods
+can be practical alternatives to generative LLMs.
+
+More complex extraction tasks may benefit from
+LLMs or hybrid approaches.
+
+Pipeline processing skills
+(e.g., inspect, clean, engineer features, validate)
+help prepare data for analysis and downstream applications.
+
+These skills remain relevant as NLP systems evolve,
+but preprocessing decisions should be evaluated
+against the requirements of the intended model or task.
 
 ## Summary
 
-| Generation        | Representative tools         | How meaning is determined           |
-| ----------------- | ---------------------------- | ----------------------------------- |
-| Count/rule-based  | spaCy (sm), NLTK, TF-IDF     | Frequency and local adjacency       |
-| Static embeddings | spaCy md/lg, Word2Vec, GloVe | Geometric proximity in vector space |
-| Contextual / LLMs | BERT, GPT, Claude            | Dynamic attention over full context |
+| Approach          | Representative tools                                 | Primary capability                           |
+| ----------------- | ---------------------------------------------------- | -------------------------------------------- |
+| Count/rule-based  | Frequency counts, regex, spaCy rule-based components | Explicit counts and rules                    |
+| Statistical NLP   | spaCy trained taggers and NER                        | Learned predictions using linguistic context |
+| Static embeddings | Word2Vec, GloVe, spaCy md/lg word vectors            | Fixed learned word representations           |
+| Contextual models | RNNs, BERT, transformer-based LLMs                   | Context-dependent representations            |
 
-spaCy spans capabilities associated with Generations 1 and 2.
-It is fast, auditable, and sufficient for most preprocessing tasks.
-Modern LLMs operate at Generation 3,
-but work best when their input data has been
-carefully prepared using pipelines built on foundational NLP principles.
+These approaches are not mutually exclusive.
+
+spaCy combines rule-based and statistical NLP
+and supports multiple types of language representations,
+including static vectors and transformer-based components.
+
+Modern transformer-based LLMs use attention
+to compute contextual representations.
+They can process text without many traditional
+preprocessing steps, but still benefit from
+appropriate data selection, extraction,
+validation, and quality controls.
+
+Understanding these approaches helps analysts
+choose methods that fit a problem,
+rather than assuming that a newer model
+is always the most appropriate tool.
 
 ---
 
