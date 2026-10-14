@@ -117,9 +117,9 @@ additional approaches to language understanding.
 
 - [GitHub Repository](https://github.com/denisecase/nlp-06-nlp-pipeline)
 - [Example Pipeline](https://github.com/denisecase/nlp-06-nlp-pipeline/blob/main/src/nlp/pipeline_web_html.py)
-- [Example Configuration](https://github.com/denisecase/nlp-06-nlp-pipeline/blob/main/src/nlp/config_case.py)
-- [Transform Stage](https://github.com/denisecase/nlp-06-nlp-pipeline/blob/main/src/nlp/stage03_transform_case.py)
-- [Analyze Stage](https://github.com/denisecase/nlp-06-nlp-pipeline/blob/main/src/nlp/stage04_analyze_case.py)
+- [Example Configuration](https://github.com/denisecase/nlp-06-nlp-pipeline/blob/main/src/nlp/config.py)
+- [Transform Stage](https://github.com/denisecase/nlp-06-nlp-pipeline/blob/main/src/nlp/stage03_transform.py)
+- [Analyze Stage](https://github.com/denisecase/nlp-06-nlp-pipeline/blob/main/src/nlp/stage04_analyze.py)
 
 ## Project Resources
 

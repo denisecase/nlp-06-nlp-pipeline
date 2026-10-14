@@ -96,18 +96,7 @@ Analytical Questions
   - How does the cleaned text differ from the raw text?
   - Is the DataFrame genuinely ready for downstream use?
 
-======================================================================
-
-Notes:
-======================================================================
-
-Following our process, do NOT edit this  file directly.
-Keep it as a working example.
-
-In your custom project, copy this file and rename it
-by appending _yourname.py.
-
-Then edit your copy to:
+Edit your Python file to:
   - inspect your own extracted text carefully
   - apply cleaning steps appropriate to the data
   - engineer features that support the analytical goals

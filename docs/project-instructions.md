@@ -59,7 +59,7 @@ for your Module 05 custom project.
 Build on your previous work with
 HTML extraction and structured data.
 
-Keep the original `_case.py` files as working examples.
+Keep the original `.py` files as working examples.
 Create and modify copies for your custom processing stages.
 
 Update the pipeline imports as needed

@@ -1,6 +1,6 @@
 """src/nlp/stage05_load.py.
 
-(NO EDITS REQUIRED IN THIS FILE IF USING THE SAME PACKAGES)
+NO EDITS REQUIRED IN THIS FILE (if paths have not changed.)
 
 Source: DataFrame (in this case, a Pandas DataFrame, change if using polars)
 Sink: CSV file

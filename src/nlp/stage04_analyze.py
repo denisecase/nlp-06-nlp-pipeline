@@ -1,6 +1,6 @@
 """stage04_analyze.py.
 
-(EDIT YOUR COPY OF THIS FILE)
+(MODIFY YOUR VERSION OF THIS FILE)
 
 Source: analysis-ready Pandas DataFrame (from Transform stage)
 Sink:   visualizations saved to data/processed/
@@ -42,18 +42,7 @@ Analytical Questions
   - What does the type-token ratio tell us about vocabulary richness?
   - Would a different cleaning strategy change the results?
 
-======================================================================
-
-Notes:
-======================================================================
-
-Following our process, do NOT edit this  file directly.
-Keep it as a working example.
-
-In your custom project, copy this file and rename it
-by appending _yourname.py.
-
-Then edit your copy to:
+Edit your Python file to:
   - adjust the number of top tokens shown
   - add additional visualizations
   - compare results across multiple documents
