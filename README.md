@@ -114,20 +114,24 @@ The goal is to understand how an NLP pipeline
 transforms raw web content into structured,
 analysis-ready data with interpretable features.
 
-## spaCy and Language Models
+## spaCy Pipeline
 
 The project uses [spaCy](https://spacy.io/)
-for tokenization and linguistic text processing.
+for tokenization and for flagging
+stopwords and punctuation.
 
 The example uses the `en_core_web_sm`
-English language model.
+small English trained pipeline.
 
-The model is declared in
+The package is declared in
 [pyproject.toml](pyproject.toml)
 and installs with the project dependencies.
 
-The example uses spaCy to identify tokens
-and remove common stopwords.
+The example uses spaCy to split text into tokens
+and remove stopwords and punctuation.
+The same pipeline also provides part-of-speech tagging,
+dependency parsing, and named entity recognition.
+This example does not use those components.
 
 Text preprocessing remains useful in modern NLP,
 particularly when creating inspectable,

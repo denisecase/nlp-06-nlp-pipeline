@@ -23,7 +23,7 @@ and connections to modern language models.
 - **POS Tagging** - assigning grammatical categories to tokens.
 - **NER** - identifying and classifying named entities.
 - **spaCy** - a Python library for natural language processing.
-- **spaCy Language Model** - trained components for linguistic analysis.
+- **spaCy Pipeline** - trained components for linguistic analysis.
 - **spaCy Doc** - a container for processed text and linguistic annotations.
 
 ### Python Analysis and Visualization
@@ -303,13 +303,13 @@ and is widely used for applied NLP.
 
 See [spaCy Documentation](https://spacy.io/).
 
-### spaCy Language Model
+### spaCy Pipeline
 
-A **spaCy language model** is a package
+A **spaCy pipeline** is a package
 containing configuration and components
 used to process language.
 
-Depending on the model, components may provide:
+Depending on the pipeline, components may provide:
 
 - Part-of-speech predictions.
 - Syntactic dependency analysis.
@@ -317,16 +317,16 @@ Depending on the model, components may provide:
 - Other linguistic annotations.
 - Word vectors for similarity analysis.
 
-The `en_core_web_sm` model
+The small `en_core_web_sm`
 provides a relatively small English pipeline.
 
-Other English model packages include:
+Other English packages include:
 
-- `en_core_web_md` - medium-sized model with static word vectors.
-- `en_core_web_lg` - larger model with static word vectors.
+- `en_core_web_md` - medium-sized pipeline with static word vectors.
+- `en_core_web_lg` - larger pipeline with static word vectors.
 - `en_core_web_trf` - transformer-based processing components.
 
-Model capabilities and resource requirements vary.
+Capabilities and resource requirements vary.
 
 Tokenization itself does not necessarily
 require a trained statistical model.
@@ -582,7 +582,7 @@ Examples of static embedding approaches include:
 - GloVe.
 - FastText.
 
-Some spaCy language models
+Some spaCy pipelines
 also include static word vectors.
 
 Static embeddings remain useful

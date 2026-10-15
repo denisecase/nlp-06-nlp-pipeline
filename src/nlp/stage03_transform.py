@@ -40,7 +40,7 @@ and ask yourself:
   - What derived features would help a model or analyst?
 
 The answers often suggest more work and that increases value.
-That's the analyst workflow in action.
+That's our workflow in action.
 
 ======================================================================
 MODERN LLM Tools
@@ -57,25 +57,24 @@ A valuable analyst is one who understands:
   - how to inspect, iterate, and improve data quality
   - how to document those decisions so they are reproducible
 
-The goal in this stage is not just to produce a clean DataFrame.
-The goal is to develop the judgment to know when a DataFrame
+The goal in this stage is to develop the judgment to know when a DataFrame
 is ready for use, and to professionally document why choices were made.
 
-Judgment is what makes an analyst irreplaceable.
+Sound judgment is critical for an analyst.
 
 ======================================================================
 THIS STAGE
 ======================================================================
 
-This stage runs three substages, each logged separately:
+This stage runs substages, each logged separately:
 
-  03a. Extract fields from the validated HTML into a raw DataFrame.
+  Extract fields from the validated HTML into a raw DataFrame.
        Inspect: does the raw data look right?
 
-  03b. Clean and normalize the text fields.
+  Clean and normalize the text fields.
        Inspect: is the text cleaner? Did we lose anything we needed?
 
-  03c. Engineer derived features (tokens, word count, frequency).
+  Engineer derived features (tokens, word count, frequency).
        Inspect: do the derived fields add signal for downstream analysis?
 
 The final DataFrame is the settled result of these three passes.
@@ -113,10 +112,9 @@ from bs4 import BeautifulSoup, Tag
 import pandas as pd
 import spacy
 
-# Load the small spaCy English pre-trained model.
-# This model provides tokenization, stopword lists, and linguistic annotations.
-# Verify "en-core-web-sm" is installed with the project dependencies (see pyproject.toml).
-# If not, it must be downloaded.
+# Load the small spaCy English trained pipeline (en_core_web_sm).
+# It provides tokenization, stopword lists, and linguistic annotations.
+# Verify "en-core-web-sm" is included with the project dependencies (see pyproject.toml).
 nlp = spacy.load("en_core_web_sm")
 
 # ============================================================
@@ -146,7 +144,7 @@ def _clean_text(text: str, nlp_model: spacy.language.Language) -> str:
 
     Args:
         text (str): Raw text string to clean.
-        nlp_model: Loaded spaCy language model.
+        nlp_model: Loaded spaCy pipeline.
 
     Returns:
         str: Cleaned text string.
@@ -158,7 +156,9 @@ def _clean_text(text: str, nlp_model: spacy.language.Language) -> str:
 
     # Step 2: Clean text by removing stopwords, punctuation, and extra whitespace using spaCy.
     # WHY: Removing stopwords and punctuation reduces noise and focuses on meaningful content.
-    # TRADEOFF: Some context may be lost, especially for hyphenated terms.
+    # TRADEOFF: Some stopwords matter in certain contexts (e.g., "not").
+    # TRADEOFF: Removing punctuation loses sentence boundary information.
+    # TRADEOFF: Hyphenated terms lose their compound meaning as a unit.
     # Hyphenated terms like red-teaming are split by spaCy into red, -, teaming,
     # and the hyphen is then dropped, so no fused tokens are produced.
     doc = nlp_model(text)
