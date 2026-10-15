@@ -108,17 +108,15 @@ Edit your Python file to:
 # ============================================================
 
 import logging
-import re
-import string
 
 from bs4 import BeautifulSoup, Tag
 import pandas as pd
 import spacy
 
-# Load the spaCy English model.
+# Load the small spaCy English pre-trained model.
 # This model provides tokenization, stopword lists, and linguistic annotations.
-# It must be downloaded once before use:
-#   uv run python -m spacy download en_core_web_sm
+# Verify "en-core-web-sm" is installed with the project dependencies (see pyproject.toml).
+# If not, it must be downloaded.
 nlp = spacy.load("en_core_web_sm")
 
 # ============================================================
@@ -146,14 +144,6 @@ def _get_text(element: Tag | None, strip_prefix: str = "", separator: str = "") 
 def _clean_text(text: str, nlp_model: spacy.language.Language) -> str:
     """Clean and normalize a text string for NLP analysis.
 
-    Cleaning steps applied in order:
-      1. Lowercase
-      2. Remove punctuation
-      3. Normalize whitespace
-      4. Remove stopwords using spaCy
-
-    Each step has a tradeoff documented below.
-
     Args:
         text (str): Raw text string to clean.
         nlp_model: Loaded spaCy language model.
@@ -166,27 +156,16 @@ def _clean_text(text: str, nlp_model: spacy.language.Language) -> str:
     # TRADEOFF: Proper nouns lose their case signal.
     text = text.lower()
 
-    # Step 2: Remove punctuation.
-    # str.maketrans creates a translation table that maps each punctuation
-    # character to None (removes it).
-    # WHY: Punctuation adds noise for frequency analysis.
-    # TRADEOFF: Sentence boundary information is lost.
-    text = text.translate(str.maketrans("", "", string.punctuation))
-
-    # Step 3: Normalize whitespace.
-    # re.sub replaces one or more whitespace characters (\s+) with a single space.
-    # WHY: Multiple spaces and newlines are artifacts of HTML extraction.
-    text = re.sub(r"\s+", " ", text).strip()
-
-    # Step 4: Remove stopwords using spaCy.
-    # spaCy processes the text and returns a Doc object.
-    # Each token has an is_stop attribute that is True for stopwords.
-    # We keep only tokens that are not stopwords and not whitespace-only.
-    # WHY: Common words (the, a, is) carry little semantic signal.
-    # TRADEOFF: Some stopwords matter in certain contexts (e.g., "not").
+    # Step 2: Clean text by removing stopwords, punctuation, and extra whitespace using spaCy.
+    # WHY: Removing stopwords and punctuation reduces noise and focuses on meaningful content.
+    # TRADEOFF: Some context may be lost, especially for hyphenated terms.
+    # Hyphenated terms like red-teaming are split by spaCy into red, -, teaming,
+    # and the hyphen is then dropped, so no fused tokens are produced.
     doc = nlp_model(text)
     text = " ".join(
-        [token.text for token in doc if not token.is_stop and not token.is_space]
+        token.text
+        for token in doc
+        if not (token.is_stop or token.is_punct or token.is_space)
     )
 
     return text
@@ -234,16 +213,12 @@ def run_transform(
     LOG.info("========================")
 
     # Extract fields using the same approach as Module 5.
-    # See nlp-06-nlp-pipeline/src/nlp/stage03_transform.py for full explanation.
     # Code is refactored to use the internal function _get_text() helper.
 
     LOG.info("Inspect: does the raw data look right?")
     LOG.info("Look at the logged output. Does anything look surprising?")
     LOG.info("That is the first signal that cleaning is needed.")
     LOG.info("========================")
-
-    # Extract fields using the same approach as Module 5.
-    # See nlp-06-nlp-pipeline/src/nlp/stage03_transform.py for full explanation.
 
     LOG.info("------------------------")
     LOG.info("Project specific: Extract title, authors, abstract")
@@ -254,14 +229,19 @@ def run_transform(
     LOG.info(f"Extracted title: {title}")
 
     authors_tag: Tag | None = soup.find("div", class_="authors")
+
+    # Extract individual author tags from the authors div
+    # If there are no author tags, the authors list will be empty.
     author_tags_list: list[Tag] = authors_tag.find_all("a") if authors_tag else []
+
+    # Join the individual author names into a single string, separated by commas.
+    # If the authors list is empty, default to "unknown".
     authors: str = (
         ", ".join([tag.get_text(strip=True) for tag in author_tags_list])
         .replace("Authors:", "")
         .strip()
-        if authors_tag
-        else "unknown"
-    )
+    ) or "unknown"
+
     LOG.info(f"Extracted authors: {authors}")
 
     abstract_tag: Tag | None = soup.find("blockquote", class_="abstract")
@@ -387,7 +367,7 @@ def run_transform(
         round(unique_token_count / token_count, 4) if token_count > 0 else 0.0
     )
     LOG.info(f"  type_token_ratio:    {type_token_ratio}")
-    LOG.info(f"  top 10 tokens:       {tokens[:10]}")
+    LOG.info(f"  first 10 tokens:     {tokens[:10]}")
 
     LOG.info("========================")
     LOG.info("PHASE 3.4: Build record and create DataFrame")

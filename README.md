@@ -33,6 +33,13 @@ The project extends the EVTL approach
 from earlier modules by adding an explicit
 Analyze stage.
 
+Specifically, it reuses frequency and charts from 01,
+cleaning from 02,
+the stage pattern from 04, and
+extraction from 05.
+Co-occurrence and bigrams were covered in 03,
+but are not required for this project.
+
 The resulting architecture is
 Extract, Validate, Transform, Analyze, Load (EVTAL).
 
@@ -179,7 +186,7 @@ analysis, and persistence.
 Run the automated tests:
 
 ```shell
-uv run pytest
+uv run python -m pytest
 ```
 
 ## Project Documentation

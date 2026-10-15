@@ -106,11 +106,6 @@ and **encodes the relationships between words**
 as **directions in vector space**.
 
 spaCy's `en_core_web_md` and `en_core_web_lg` models include static word vectors.
-They are called **static**
-because each word has one fixed vector regardless of context.
-"Bank" in "river bank" and "bank account" still gets the same vector:
-an average of all the contexts
-the word appears in across the training corpus.
 
 They are called **static** because a given word
 has the same learned vector regardless of the sentence.
@@ -123,7 +118,7 @@ the word's occurrences in the training corpus.
 It is not necessarily a literal average of those contexts.
 
 Static embeddings capture useful statistical relationships,
-but the embedding itself does not change according
+but the embedding itself **does not change** according
 to the word's current context.
 
 Other model components can still use surrounding words
